@@ -30,8 +30,9 @@ Variante A wurde als Basis für die Animation gewählt.
 Flex-/Power-Pose-Loop, 5 Sekunden, 1080p, 1:1, ausgehend von Variante A.
 
 - **Job-ID:** `90fab434-3cd4-4b83-8dfc-6cbdd825aad0`
-- Ergebnis-URL: siehe Chat-Verlauf dieser Session bzw. erneut abrufbar über
-  `job_display` mit obiger Job-ID.
+- **Ergebnis-URL (MP4):**
+  https://d8j0ntlcm91z4.cloudfront.net/user_3GrDazyvIxWQhyzUUiv11teVoo9/hf_20260723_151854_90fab434-3cd4-4b83-8dfc-6cbdd825aad0.mp4
+- Jederzeit erneut abrufbar über `job_display` mit obiger Job-ID.
 
 ## Wichtiger Hinweis zur Asset-Ablage
 
