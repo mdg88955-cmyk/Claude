@@ -1,0 +1,612 @@
+<title>ATHLESIO — Home Performance Storefront</title>
+<meta name="description" content="ATHLESIO Storefront-Prototyp: Bold-Athletic Landingpage und Produktseite für das Premium-Widerstandsband-Set. Zielmarkt DE/AT.">
+<style>
+  :root {
+    --graphite: #14151A;
+    --iron: #22242B;
+    --iron-2: #2C2F38;
+    --bone: #F5F3EF;
+    --bone-2: #ECE9E2;
+    --lime: #D6FF3F;
+    --lime-dim: #b9df2f;
+    --steel: #8A8D93;
+    --steel-dk: #5c5f66;
+    --white: #FFFFFF;
+
+    /* theme-aware base surfaces */
+    --page: var(--bone);
+    --page-ink: var(--graphite);
+    --page-muted: #55575d;
+    --card: var(--white);
+    --card-line: rgba(20,21,26,.12);
+
+    --display: 900 1em/0.92 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Roboto Mono', Menlo, monospace;
+
+    --wrap: 1200px;
+    --pad: clamp(20px, 5vw, 72px);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #0e0f13;
+      --page-ink: var(--bone);
+      --page-muted: #a4a7ad;
+      --card: var(--iron);
+      --card-line: rgba(245,243,239,.14);
+    }
+  }
+  :root[data-theme="light"] {
+    --page: var(--bone); --page-ink: var(--graphite); --page-muted: #55575d;
+    --card: var(--white); --card-line: rgba(20,21,26,.12);
+  }
+  :root[data-theme="dark"] {
+    --page: #0e0f13; --page-ink: var(--bone); --page-muted: #a4a7ad;
+    --card: var(--iron); --card-line: rgba(245,243,239,.14);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0; background: var(--page); color: var(--page-ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+
+  .mono { font-family: var(--mono); }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--steel); font-weight: 500;
+  }
+  .display {
+    font: var(--display); text-transform: uppercase;
+    letter-spacing: -0.02em; text-wrap: balance; margin: 0;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: .6em;
+    font-family: var(--mono); font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+    font-weight: 600; padding: 16px 26px; border: 0; cursor: pointer;
+    background: var(--lime); color: var(--graphite); border-radius: 0;
+    transition: transform .15s ease, background .15s ease;
+  }
+  .btn:hover { background: var(--white); transform: translateY(-2px); }
+  .btn--ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1.5px currentColor; }
+  .btn--ghost:hover { background: var(--page-ink); color: var(--page); }
+  :focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+
+  /* ---------- Resistance Index signature ---------- */
+  .rix { display: flex; gap: 5px; align-items: center; }
+  .rix__seg {
+    width: 34px; height: 12px; background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--steel); transform: skewX(-18deg);
+  }
+  .rix__seg.is-on { background: var(--lime); box-shadow: inset 0 0 0 1.5px var(--lime); }
+  .rix--sm .rix__seg { width: 22px; height: 9px; }
+
+  /* ---------- Nav ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50; background: var(--graphite); color: var(--bone);
+    border-bottom: 1px solid rgba(245,243,239,.1);
+  }
+  .nav__row { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+  .brand { display: flex; align-items: center; gap: 11px; cursor: pointer; }
+  .brand svg { width: 30px; height: 30px; display: block; }
+  .brand__wm { font-weight: 800; letter-spacing: .34em; font-size: 15px; padding-left: .34em; }
+  .nav__links { display: flex; gap: 28px; align-items: center; }
+  .nav__links a { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--steel); }
+  .nav__links a:hover, .nav__links a.is-active { color: var(--lime); }
+  .nav__cart { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--bone); text-transform: uppercase; }
+  .nav__cart b { color: var(--graphite); background: var(--lime); padding: 2px 7px; margin-left: 6px; }
+  @media (max-width: 720px){ .nav__links { display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero { background: var(--graphite); color: var(--bone); position: relative; overflow: hidden; }
+  .hero__grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; padding: clamp(48px,7vw,104px) 0 0; align-items: end; }
+  .hero h1 { font: var(--display); font-size: clamp(58px, 12vw, 168px); text-transform: uppercase; letter-spacing: -0.03em; margin: 14px 0 0; }
+  .hero h1 .u { color: var(--lime); }
+  .hero__sub { max-width: 44ch; color: #c9ccd1; margin: 22px 0 30px; font-size: clamp(16px,1.6vw,19px); }
+  .hero__cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .hero__rix { margin: 40px 0 0; padding: 22px 0 40px; border-top: 1px solid rgba(245,243,239,.14); display: flex; gap: 26px; align-items: center; flex-wrap: wrap; }
+  .hero__rix .lab { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--steel); }
+  .hero__art {
+    align-self: stretch; min-height: 320px; position: relative;
+    border-left: 1px solid rgba(245,243,239,.14);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero__art .halo {
+    position: absolute; inset: 0; background: radial-gradient(60% 60% at 60% 45%, rgba(214,255,63,.16), transparent 70%);
+  }
+  .mascot { width: min(340px, 78%); position: relative; z-index: 1; filter: drop-shadow(0 30px 50px rgba(0,0,0,.5)); }
+  @media (max-width: 900px){
+    .hero__grid { grid-template-columns: 1fr; gap: 8px; padding-top: 40px; }
+    .hero__art { border-left: 0; border-top: 1px solid rgba(245,243,239,.14); margin-top: 26px; min-height: 260px; }
+  }
+
+  /* ---------- Ticker ---------- */
+  .ticker { background: var(--lime); color: var(--graphite); overflow: hidden; border-top: 3px solid var(--graphite); border-bottom: 3px solid var(--graphite); }
+  .ticker__track { display: flex; gap: 0; white-space: nowrap; will-change: transform; animation: slide 26s linear infinite; }
+  .ticker span { font-family: var(--mono); font-weight: 700; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; padding: 12px 22px; display: inline-flex; align-items: center; gap: 22px; }
+  .ticker span::after { content: "▲"; font-size: 9px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce){ .ticker__track { animation: none; } }
+
+  /* ---------- Section frame ---------- */
+  section { padding: clamp(56px, 9vw, 120px) 0; }
+  .sec-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 46px; flex-wrap: wrap; }
+  .sec-head h2 { font: var(--display); font-size: clamp(34px, 5.5vw, 68px); text-transform: uppercase; letter-spacing: -0.02em; margin: 8px 0 0; max-width: 16ch; }
+  .sec-head p { color: var(--page-muted); max-width: 40ch; margin: 0; }
+
+  .products { background: var(--bone); color: var(--graphite); }
+  :root[data-theme="dark"] .products, :root:not([data-theme]) .products { }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .products { background: #17181d; color: var(--bone); } }
+  :root[data-theme="dark"] .products { background: #17181d; color: var(--bone); }
+  :root[data-theme="light"] .products { background: var(--bone); color: var(--graphite); }
+
+  .pgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  @media (max-width: 860px){ .pgrid { grid-template-columns: 1fr; } }
+  .pcard {
+    background: var(--card); border: 1px solid var(--card-line); display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease, border-color .2s;
+  }
+  .pcard.in { opacity: 1; transform: none; }
+  .pcard:hover { border-color: var(--graphite); }
+  .pcard__media { aspect-ratio: 4/3; position: relative; overflow: hidden; background: linear-gradient(150deg, var(--iron), var(--graphite)); display: flex; align-items: center; justify-content: center; }
+  .pcard__no { position: absolute; top: 14px; left: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--lime); }
+  .pcard__glyph { width: 55%; opacity: .9; }
+  .pcard__body { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .pcard__cat { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--steel); }
+  .pcard__name { font-weight: 800; font-size: 22px; letter-spacing: -.01em; line-height: 1.05; text-transform: uppercase; }
+  .pcard__rix { display: flex; align-items: center; gap: 12px; }
+  .pcard__rix .lab { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--steel); text-transform: uppercase; }
+  .pcard__foot { margin-top: auto; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-top: 6px; }
+  .price { font-family: var(--mono); font-weight: 700; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .price s { color: var(--steel); font-weight: 500; font-size: 14px; margin-right: 8px; }
+  .pcard .btn { width: 100%; justify-content: center; }
+
+  /* ---------- Bundle band ---------- */
+  .bundle { background: var(--graphite); color: var(--bone); }
+  .bundle__in { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .bundle h2 { font: var(--display); font-size: clamp(30px,4.6vw,58px); text-transform: uppercase; letter-spacing: -.02em; margin: 10px 0 0; }
+  .bundle p { color: #c9ccd1; max-width: 46ch; margin: 16px 0 0; }
+  .bundle__price { text-align: right; }
+  .bundle__price .big { font-family: var(--mono); font-weight: 700; font-size: clamp(34px,6vw,56px); color: var(--lime); font-variant-numeric: tabular-nums; }
+  .bundle__price .sm { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--steel); text-transform: uppercase; }
+  @media (max-width: 760px){ .bundle__in { grid-template-columns: 1fr; } .bundle__price { text-align: left; } }
+
+  /* ---------- Pillars ---------- */
+  .pillars { background: var(--bone-2); color: var(--graphite); }
+  :root[data-theme="dark"] .pillars { background: #131418; color: var(--bone); }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .pillars { background: #131418; color: var(--bone); } }
+  :root[data-theme="light"] .pillars { background: var(--bone-2); color: var(--graphite); }
+  .pcols { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 2px solid currentColor; }
+  @media (max-width: 780px){ .pcols { grid-template-columns: 1fr; } }
+  .pill { padding: 30px 26px 34px; border-right: 1px solid var(--card-line); border-bottom: 1px solid var(--card-line); }
+  .pill:last-child { border-right: 0; }
+  .pill__no { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; color: var(--steel); }
+  .pill h3 { font-size: 24px; text-transform: uppercase; letter-spacing: -.01em; margin: 14px 0 10px; font-weight: 800; }
+  .pill p { color: var(--page-muted); margin: 0; font-size: 15.5px; }
+
+  /* ---------- Founder / personal brand ---------- */
+  .founder { background: var(--graphite); color: var(--bone); }
+  .founder__in { display: grid; grid-template-columns: .9fr 1.1fr; gap: 44px; align-items: center; }
+  .founder__art { aspect-ratio: 1/1; background: radial-gradient(70% 70% at 50% 40%, rgba(214,255,63,.14), transparent 70%), var(--iron); position: relative; display: flex; align-items: center; justify-content: center; }
+  .founder blockquote { font: var(--display); font-size: clamp(26px,3.6vw,46px); text-transform: uppercase; letter-spacing: -.02em; margin: 0; }
+  .founder blockquote .u { color: var(--lime); }
+  .founder cite { display: block; margin-top: 22px; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: var(--steel); font-style: normal; text-transform: uppercase; }
+  @media (max-width: 820px){ .founder__in { grid-template-columns: 1fr; } }
+
+  /* ---------- Footer ---------- */
+  footer { background: #0c0d11; color: var(--steel); padding: 56px 0 40px; }
+  .foot__row { display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; align-items: flex-start; }
+  .foot__col h4 { color: var(--bone); font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; margin: 0 0 14px; }
+  .foot__col a { display: block; font-size: 14px; padding: 4px 0; color: var(--steel); }
+  .foot__col a:hover { color: var(--lime); }
+  .foot__legal { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(245,243,239,.1); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  /* ---------- PDP ---------- */
+  .view { display: none; }
+  .view.is-active { display: block; }
+  .pdp { background: var(--page); color: var(--page-ink); }
+  .crumb { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--steel); padding: 24px 0 0; }
+  .crumb a:hover { color: var(--lime); }
+  .pdp__grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; padding: 30px 0 0; align-items: start; }
+  @media (max-width: 900px){ .pdp__grid { grid-template-columns: 1fr; gap: 30px; } }
+  .gal { display: grid; grid-template-columns: 1fr; gap: 12px; position: sticky; top: 86px; }
+  @media (max-width: 900px){ .gal { position: static; } }
+  .gal__main { aspect-ratio: 1/1; background: linear-gradient(150deg, var(--iron), var(--graphite)); display: flex; align-items: center; justify-content: center; position: relative; }
+  .gal__main .pcard__no { color: var(--lime); }
+  .gal__thumbs { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+  .gal__t { aspect-ratio: 1/1; background: linear-gradient(150deg, var(--iron-2), var(--graphite)); cursor: pointer; box-shadow: inset 0 0 0 1px var(--card-line); display: flex; align-items: center; justify-content: center; }
+  .gal__t.sel { box-shadow: inset 0 0 0 2px var(--lime); }
+  .gal__t svg { width: 46%; opacity: .8; }
+
+  .pdp__info h1 { font: var(--display); font-size: clamp(38px,6vw,66px); text-transform: uppercase; letter-spacing: -.02em; margin: 6px 0 0; }
+  .pdp__cat { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--steel); }
+  .pdp__price { display: flex; align-items: baseline; gap: 14px; margin: 20px 0 6px; }
+  .pdp__price .now { font-family: var(--mono); font-weight: 700; font-size: 32px; font-variant-numeric: tabular-nums; }
+  .pdp__price s { color: var(--steel); font-family: var(--mono); }
+  .pdp__price .save { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; background: var(--lime); color: var(--graphite); padding: 4px 9px; }
+  .pdp__lede { color: var(--page-muted); margin: 16px 0 26px; max-width: 46ch; }
+
+  .selector { border-top: 1px solid var(--card-line); border-bottom: 1px solid var(--card-line); padding: 22px 0; margin: 6px 0 24px; }
+  .selector__lab { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--steel); margin-bottom: 14px; }
+  .selector__lab b { color: var(--page-ink); }
+  .rix--pick { gap: 7px; }
+  .rix--pick .rix__seg { width: 100%; height: 34px; cursor: pointer; transition: background .12s; }
+  .rix--pick { display: grid; grid-template-columns: repeat(5,1fr); }
+
+  .buybar { display: flex; gap: 12px; margin: 6px 0 22px; }
+  .buybar .btn { flex: 1; justify-content: center; font-size: 14px; padding: 20px; }
+  .qty { display: flex; align-items: center; border: 1.5px solid var(--card-line); }
+  .qty button { background: transparent; border: 0; color: inherit; width: 46px; height: 100%; font-size: 20px; cursor: pointer; font-family: var(--mono); }
+  .qty span { min-width: 34px; text-align: center; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  .assure { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border: 1px solid var(--card-line); margin-bottom: 8px; }
+  @media (max-width:520px){ .assure { grid-template-columns: 1fr; } }
+  .assure div { padding: 16px; border-right: 1px solid var(--card-line); }
+  .assure div:last-child { border-right: 0; }
+  .assure .k { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--lime-dim); }
+  :root[data-theme="light"] .assure .k, :root:not([data-theme]) .assure .k { color: #6d8b00; }
+  .assure .v { font-weight: 700; font-size: 14px; margin-top: 4px; }
+
+  .acc { border-top: 1px solid var(--card-line); }
+  .acc details { border-bottom: 1px solid var(--card-line); }
+  .acc summary { cursor: pointer; list-style: none; padding: 18px 0; display: flex; justify-content: space-between; align-items: center; font-weight: 700; text-transform: uppercase; letter-spacing: -.01em; font-size: 15px; }
+  .acc summary::-webkit-details-marker { display: none; }
+  .acc summary::after { content: "+"; font-family: var(--mono); color: var(--lime-dim); font-size: 20px; }
+  .acc details[open] summary::after { content: "–"; }
+  .acc__body { padding: 0 0 20px; color: var(--page-muted); font-size: 15px; }
+  .acc__body ul { margin: 0; padding-left: 18px; }
+  .acc__body li { padding: 3px 0; }
+
+  /* cross sell */
+  .xsell { background: var(--bone-2); color: var(--graphite); }
+  :root[data-theme="dark"] .xsell { background: #131418; color: var(--bone); }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .xsell { background: #131418; color: var(--bone); } }
+  :root[data-theme="light"] .xsell { background: var(--bone-2); color: var(--graphite); }
+
+  /* toast */
+  .toast { position: fixed; left: 50%; bottom: 30px; transform: translate(-50%, 140%); background: var(--lime); color: var(--graphite); font-family: var(--mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; padding: 15px 24px; z-index: 100; transition: transform .35s cubic-bezier(.2,.9,.3,1.2); box-shadow: 0 12px 30px rgba(0,0,0,.3); }
+  .toast.show { transform: translate(-50%, 0); }
+
+  .note { background: var(--iron); color: var(--steel); font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-align: center; padding: 10px var(--pad); border-top: 1px solid rgba(245,243,239,.08); }
+</style>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav__row">
+    <div class="brand" data-nav="home" role="button" tabindex="0" aria-label="ATHLESIO Startseite">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M50 12 L84 88 L66 88 L50 46 L34 88 L16 88 Z" fill="#F5F3EF"/>
+        <path d="M24 70 C48 66 62 54 80 30 C66 60 50 72 30 78 Z" fill="#D6FF3F"/>
+      </svg>
+      <span class="brand__wm">ATHLESIO</span>
+    </div>
+    <nav class="nav__links">
+      <a data-nav="home" class="is-active">Start</a>
+      <a data-nav="product">PowerBand Set</a>
+      <a data-nav="home" href="#products">Produkte</a>
+      <a data-nav="home" href="#why">Warum ATHLESIO</a>
+    </nav>
+    <div class="nav__cart" aria-live="polite">Warenkorb <b id="cartCount">0</b></div>
+  </div>
+</header>
+
+<!-- ============ HOME VIEW ============ -->
+<div class="view is-active" id="view-home">
+
+  <section class="hero" style="padding:0">
+    <div class="wrap">
+      <div class="hero__grid">
+        <div>
+          <span class="eyebrow">Home Performance · Made for DE &amp; AT</span>
+          <h1>Trainiere<br>unter <span class="u">Spannung</span></h1>
+          <p class="hero__sub">Studio-Qualität für dein Wohnzimmer. Drei Geräte, ein System — geprüftes Material, in 2–5 Werktagen bei dir. Kein Abo. Keine Ausreden.</p>
+          <div class="hero__cta">
+            <button class="btn" data-nav="product">Hero-Produkt ansehen</button>
+            <a class="btn btn--ghost" href="#products" style="color:var(--bone)">Alle 3 Produkte</a>
+          </div>
+          <div class="hero__rix">
+            <span class="lab">Resistance Index</span>
+            <div class="rix" id="heroRix" aria-hidden="true">
+              <span class="rix__seg"></span><span class="rix__seg"></span><span class="rix__seg"></span><span class="rix__seg"></span><span class="rix__seg"></span>
+            </div>
+            <span class="lab">Level 1 → 5 · Warm-up bis Maximalkraft</span>
+          </div>
+        </div>
+        <div class="hero__art">
+          <div class="halo"></div>
+          <!-- LEO mascot placeholder mark (generated asset drops in here) -->
+          <svg class="mascot" viewBox="0 0 200 240" aria-label="ATHLESIO Maskottchen LEO">
+            <circle cx="100" cy="88" r="58" fill="none" stroke="#D6FF3F" stroke-width="3"/>
+            <path d="M100 40 L128 96 L114 96 L100 66 L86 96 L72 96 Z" fill="#F5F3EF"/>
+            <path d="M74 108 C92 105 104 98 120 84 C108 104 94 112 80 114 Z" fill="#D6FF3F"/>
+            <text x="100" y="188" text-anchor="middle" fill="#8A8D93" font-family="ui-monospace,monospace" font-size="11" letter-spacing="3">LEO · MASCOT</text>
+            <text x="100" y="208" text-anchor="middle" fill="#5c5f66" font-family="ui-monospace,monospace" font-size="8" letter-spacing="2">HIGGSFIELD ASSET SLOT</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>2–5 Werktage DE &amp; AT<span></span></span><span>30 Tage Rückgabe</span><span>2 Jahre Garantie</span><span>Versand aus EU-Lager</span><span>Kein Abo</span><span>Trainingsguide inklusive</span>
+      <span>2–5 Werktage DE &amp; AT</span><span>30 Tage Rückgabe</span><span>2 Jahre Garantie</span><span>Versand aus EU-Lager</span><span>Kein Abo</span><span>Trainingsguide inklusive</span>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <section class="products" id="products">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">Das Sortiment · 03 Geräte</span>
+          <h2>Ein fokussiertes Home-Gym</h2>
+        </div>
+        <p>Kein überladenes Warenhaus. Drei Geräte, die zusammen ein komplettes System aus Kraft, Mobility und Cardio ergeben.</p>
+      </div>
+      <div class="pgrid" id="pgrid">
+        <!-- cards injected -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Bundle -->
+  <section class="bundle">
+    <div class="wrap bundle__in">
+      <div>
+        <span class="eyebrow" style="color:var(--lime)">Spare 15 % · Alle 3 Geräte</span>
+        <h2>Home Gym<br>Starter Bundle</h2>
+        <p>PowerBand Set, FlexBoard und StepCore — Kraft, Core und Cardio in einem Paket. Ein Setup, mit dem du sofort komplett trainierst.</p>
+        <div style="margin-top:26px"><button class="btn" onclick="addToCart('Home Gym Starter Bundle')">Bundle in den Warenkorb</button></div>
+      </div>
+      <div class="bundle__price">
+        <div class="sm"><s style="color:var(--steel)">statt 254,85 €</s></div>
+        <div class="big">204,95 €</div>
+        <div class="sm">inkl. MwSt. · versandkostenfrei</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="pillars" id="why">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="eyebrow">Warum ATHLESIO</span><h2>Drei Versprechen</h2></div>
+      </div>
+      <div class="pcols">
+        <div class="pill"><div class="pill__no">01 — Qualität</div><h3>Geprüft, nicht gehofft</h3><p>Jedes Gerät wird auf Material und Verarbeitung geprüft, bevor es ins Sortiment kommt. Reißfest, belastbar, gemacht für tägliches Training.</p></div>
+        <div class="pill"><div class="pill__no">02 — Lieferzeit</div><h3>2–5 Werktage DE &amp; AT</h3><p>Versand aus dem EU-Lager. Keine wochenlange Wartezeit, keine Zollüberraschung. Tracking-Nummer inklusive.</p></div>
+        <div class="pill"><div class="pill__no">03 — Marke</div><h3>Kein anonymer Shop</h3><p>Hinter ATHLESIO steht ein Gründer, der selbst trainiert und die Marke Schritt für Schritt mit dir aufbaut. Folge dem Weg.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder / personal brand -->
+  <section class="founder">
+    <div class="wrap founder__in">
+      <div class="founder__art">
+        <svg width="60%" viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M50 14 L82 86 L66 86 L50 48 L34 86 L18 86 Z" fill="#F5F3EF"/>
+          <path d="M26 68 C48 64 62 53 80 32 C66 60 50 70 32 76 Z" fill="#D6FF3F"/>
+        </svg>
+      </div>
+      <div>
+        <span class="eyebrow">Die Personal Brand</span>
+        <blockquote>Ich baue die Marke, die ich als Trainierender selbst <span class="u">kaufen würde.</span></blockquote>
+        <cite>— Gründer, ATHLESIO · Instagram &amp; TikTok folgen bald</cite>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot__row">
+        <div class="brand" style="align-items:flex-start">
+          <svg viewBox="0 0 100 100" width="34" aria-hidden="true"><path d="M50 12 L84 88 L66 88 L50 46 L34 88 L16 88 Z" fill="#F5F3EF"/><path d="M24 70 C48 66 62 54 80 30 C66 60 50 72 30 78 Z" fill="#D6FF3F"/></svg>
+        </div>
+        <div class="foot__col"><h4>Shop</h4><a data-nav="product">PowerBand Set</a><a href="#products" data-nav="home">FlexBoard</a><a href="#products" data-nav="home">StepCore</a><a href="#products" data-nav="home">Bundle</a></div>
+        <div class="foot__col"><h4>Service</h4><a>Versand &amp; Lieferzeit</a><a>Rückgabe &amp; Garantie</a><a>Kontakt</a><a>FAQ</a></div>
+        <div class="foot__col"><h4>Marke</h4><a href="#why" data-nav="home">Über ATHLESIO</a><a>Instagram</a><a>TikTok</a></div>
+        <div class="foot__col"><h4>Rechtliches</h4><a>Impressum</a><a>AGB</a><a>Widerruf</a><a>Datenschutz</a></div>
+      </div>
+      <div class="foot__legal"><span>© 2026 ATHLESIO · athlesio.at</span><span>Prototyp — Preise &amp; Angaben Platzhalter</span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ PDP VIEW ============ -->
+<div class="view pdp" id="view-product">
+  <div class="wrap">
+    <div class="crumb"><a data-nav="home">Start</a> / <a href="#products" data-nav="home">Produkte</a> / <span style="color:var(--page-ink)">PowerBand Set</span></div>
+    <div class="pdp__grid">
+      <div class="gal">
+        <div class="gal__main">
+          <span class="pcard__no">HERO · 01</span>
+          <svg id="galMain" width="52%" viewBox="0 0 120 120" aria-label="PowerBand Set">
+            <ellipse cx="60" cy="60" rx="42" ry="42" fill="none" stroke="#D6FF3F" stroke-width="4"/>
+            <ellipse cx="60" cy="60" rx="30" ry="30" fill="none" stroke="#F5F3EF" stroke-width="4"/>
+            <ellipse cx="60" cy="60" rx="18" ry="18" fill="none" stroke="#8A8D93" stroke-width="4"/>
+          </svg>
+        </div>
+        <div class="gal__thumbs">
+          <div class="gal__t sel"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="34" fill="none" stroke="#D6FF3F" stroke-width="6"/></svg></div>
+          <div class="gal__t"><svg viewBox="0 0 100 100"><rect x="20" y="44" width="60" height="12" fill="#D6FF3F"/></svg></div>
+          <div class="gal__t"><svg viewBox="0 0 100 100"><path d="M30 70 L50 30 L70 70 Z" fill="none" stroke="#F5F3EF" stroke-width="6"/></svg></div>
+          <div class="gal__t"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="10" fill="#D6FF3F"/><circle cx="50" cy="50" r="26" fill="none" stroke="#8A8D93" stroke-width="4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="pdp__info">
+        <span class="pdp__cat">Widerstandsband-Set · Hero-Produkt</span>
+        <h1>PowerBand Set</h1>
+        <div class="pdp__price">
+          <span class="now">34,95 €</span>
+          <s>49,95 €</s>
+          <span class="save">−30 %</span>
+        </div>
+        <p class="pdp__lede">Fünf Widerstandsstufen in einem Set — vom Mobility-Warm-up bis zum Kraftaufbau mit Zusatzwiderstand. Reißfestes Material, kompakt, reisetauglich.</p>
+
+        <div class="selector">
+          <div class="selector__lab"><span>Widerstandsstufe wählen</span><span>Level <b id="lvlOut">3</b> / 5</span></div>
+          <div class="rix rix--pick" id="pickRix" role="group" aria-label="Widerstandsstufe">
+            <span class="rix__seg is-on" data-lvl="1"></span>
+            <span class="rix__seg is-on" data-lvl="2"></span>
+            <span class="rix__seg is-on" data-lvl="3"></span>
+            <span class="rix__seg" data-lvl="4"></span>
+            <span class="rix__seg" data-lvl="5"></span>
+          </div>
+        </div>
+
+        <div class="buybar">
+          <div class="qty" aria-label="Menge">
+            <button type="button" onclick="qty(-1)" aria-label="Weniger">–</button>
+            <span id="qtyOut">1</span>
+            <button type="button" onclick="qty(1)" aria-label="Mehr">+</button>
+          </div>
+          <button class="btn" onclick="addToCart('PowerBand Set')">In den Warenkorb</button>
+        </div>
+
+        <div class="assure">
+          <div><div class="k">Lieferung</div><div class="v">2–5 Werktage</div></div>
+          <div><div class="k">Rückgabe</div><div class="v">30 Tage</div></div>
+          <div><div class="k">Garantie</div><div class="v">2 Jahre</div></div>
+        </div>
+
+        <div class="acc">
+          <details open><summary>Im Set enthalten</summary><div class="acc__body"><ul>
+            <li>5 Widerstandsbänder (Level 1–5)</li>
+            <li>Aufbewahrungsbeutel</li>
+            <li>LEO Trainingsguide — 20 Übungen (PDF)</li>
+          </ul></div></details>
+          <details><summary>Für wen geeignet</summary><div class="acc__body">Home-Workouts, Warm-up vor dem Gym, physiotherapiebegleitendes Training und Reisetraining. Von Einsteiger bis fortgeschritten.</div></details>
+          <details><summary>Material &amp; Pflege</summary><div class="acc__body">Reißfestes Bandmaterial mit geprüfter Belastungsgrenze. Mit lauwarmem Wasser abwischen, trocken und vor direkter Sonne geschützt lagern. <span class="mono" style="color:var(--steel)">(finale Materialangabe je nach Lieferant)</span></div></details>
+          <details><summary>Versand &amp; Rückgabe</summary><div class="acc__body">Versand aus EU-Lager nach Deutschland &amp; Österreich in 2–5 Werktagen, mit Tracking. 30 Tage Rückgaberecht ab Erhalt.</div></details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- cross sell -->
+  <section class="xsell">
+    <div class="wrap">
+      <div class="sec-head"><div><span class="eyebrow">Passt dazu</span><h2>Vervollständige dein Setup</h2></div></div>
+      <div class="pgrid" id="xgrid"></div>
+    </div>
+  </section>
+</div>
+
+<div class="note">Interaktiver Prototyp · alle Preise, Materialangaben und Assets sind Platzhalter bis Lieferant &amp; Shopify-Store final stehen.</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">In den Warenkorb gelegt</div>
+
+<script>
+  // ---- product data (from content/products/*.md) ----
+  var PRODUCTS = [
+    { no:"01", cat:"Widerstandsband-Set", name:"PowerBand Set", price:"34,95 €", was:"49,95 €", rix:5, tag:"Hero-Produkt", glyph:'<svg class="pcard__glyph" viewBox="0 0 120 120"><ellipse cx="60" cy="60" rx="40" ry="40" fill="none" stroke="#D6FF3F" stroke-width="5"/><ellipse cx="60" cy="60" rx="27" ry="27" fill="none" stroke="#F5F3EF" stroke-width="5"/><ellipse cx="60" cy="60" rx="14" ry="14" fill="none" stroke="#8A8D93" stroke-width="5"/></svg>', open:true },
+    { no:"02", cat:"Pilates-Board", name:"FlexBoard", price:"79,95 €", was:"99,95 €", rix:3, tag:"Visuelles Upgrade", glyph:'<svg class="pcard__glyph" viewBox="0 0 120 120"><rect x="18" y="52" width="84" height="16" rx="2" fill="#D6FF3F"/><rect x="30" y="68" width="12" height="20" fill="#8A8D93"/><rect x="78" y="68" width="12" height="20" fill="#8A8D93"/></svg>', open:false },
+    { no:"03", cat:"Mini-Stepper", name:"StepCore", price:"89,95 €", was:"119,95 €", rix:4, tag:"Cardio-Erweiterung", glyph:'<svg class="pcard__glyph" viewBox="0 0 120 120"><path d="M30 84 L54 60 L54 84 Z" fill="#8A8D93"/><path d="M90 84 L66 60 L66 84 Z" fill="#F5F3EF"/><rect x="52" y="40" width="16" height="26" fill="#D6FF3F"/></svg>', open:false }
+  ];
+
+  function rixHTML(level, sm){
+    var s = '<div class="rix '+(sm?'rix--sm':'')+'" aria-hidden="true">';
+    for (var i=1;i<=5;i++){ s += '<span class="rix__seg'+(i<=level?' is-on':'')+'"></span>'; }
+    return s + '</div>';
+  }
+  function cardHTML(p){
+    return '<article class="pcard">'
+      + '<div class="pcard__media"><span class="pcard__no">'+p.no+'</span>'+p.glyph+'</div>'
+      + '<div class="pcard__body">'
+      + '<div class="pcard__cat">'+p.cat+'</div>'
+      + '<div class="pcard__name">'+p.name+'</div>'
+      + '<div class="pcard__rix"><span class="lab">Intensität</span>'+rixHTML(p.rix,true)+'</div>'
+      + '<div class="pcard__foot"><div class="price"><s>'+p.was+'</s>'+p.price+'</div></div>'
+      + (p.name==="PowerBand Set"
+          ? '<button class="btn" data-nav="product">Ansehen</button>'
+          : '<button class="btn" onclick="addToCart(\''+p.name+'\')">In den Warenkorb</button>')
+      + '</div></article>';
+  }
+
+  document.getElementById('pgrid').innerHTML = PRODUCTS.map(cardHTML).join('');
+  document.getElementById('xgrid').innerHTML = PRODUCTS.filter(function(p){return p.name!=="PowerBand Set";}).map(cardHTML).join('');
+
+  // ---- view switching ----
+  function show(view){
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('is-active'); });
+    document.getElementById('view-'+view).classList.add('is-active');
+    document.querySelectorAll('.nav__links a').forEach(function(a){ a.classList.toggle('is-active', a.dataset.nav===view && !a.getAttribute('href')); });
+    window.scrollTo({top:0, behavior:'auto'});
+    revealCards();
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-nav]');
+    if(!t) return;
+    var href = t.getAttribute('href');
+    if(href && t.dataset.nav==='home'){ show('home'); /* let anchor scroll after */ setTimeout(function(){ var el=document.querySelector(href); if(el) el.scrollIntoView(); },0); e.preventDefault(); return; }
+    e.preventDefault(); show(t.dataset.nav);
+  });
+  document.addEventListener('keydown', function(e){
+    if((e.key==='Enter'||e.key===' ') && e.target.classList.contains('brand')){ e.preventDefault(); show('home'); }
+  });
+
+  // ---- cart ----
+  var cart = 0;
+  function addToCart(name){
+    cart++; document.getElementById('cartCount').textContent = cart;
+    var t = document.getElementById('toast');
+    t.textContent = name + ' — im Warenkorb';
+    t.classList.add('show');
+    clearTimeout(window._tt); window._tt = setTimeout(function(){ t.classList.remove('show'); }, 1900);
+  }
+
+  // ---- qty ----
+  var q = 1;
+  function qty(d){ q = Math.max(1, q+d); document.getElementById('qtyOut').textContent = q; }
+
+  // ---- PDP resistance picker ----
+  var pick = document.getElementById('pickRix');
+  if(pick){
+    pick.addEventListener('click', function(e){
+      var seg = e.target.closest('.rix__seg'); if(!seg) return;
+      var lvl = +seg.dataset.lvl;
+      pick.querySelectorAll('.rix__seg').forEach(function(s){ s.classList.toggle('is-on', +s.dataset.lvl <= lvl); });
+      document.getElementById('lvlOut').textContent = lvl;
+    });
+  }
+
+  // ---- gallery thumbs ----
+  document.querySelectorAll('.gal__t').forEach(function(t){
+    t.addEventListener('click', function(){
+      document.querySelectorAll('.gal__t').forEach(function(x){ x.classList.remove('sel'); });
+      t.classList.add('sel');
+      document.getElementById('galMain').innerHTML = t.querySelector('svg').innerHTML;
+    });
+  });
+
+  // ---- hero resistance load animation ----
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hero = document.getElementById('heroRix');
+  if(hero){
+    var segs = hero.querySelectorAll('.rix__seg');
+    if(reduce){ segs.forEach(function(s){ s.classList.add('is-on'); }); }
+    else { segs.forEach(function(s,i){ setTimeout(function(){ s.classList.add('is-on'); }, 260*i + 400); }); }
+  }
+
+  // ---- scroll reveal for cards ----
+  function revealCards(){
+    var cards = document.querySelectorAll('.view.is-active .pcard');
+    if(reduce){ cards.forEach(function(c){ c.classList.add('in'); }); return; }
+    if(!('IntersectionObserver' in window)){ cards.forEach(function(c){ c.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: .18 });
+    cards.forEach(function(c){ io.observe(c); });
+  }
+  revealCards();
+</script>
