@@ -1,0 +1,511 @@
+<title>Athlesio Muscle Boost Gummies — Shop</title>
+<meta name="description" content="Konversionsoptimierter Single-Product-Shop-Prototyp für Athlesio Muscle Boost Gummies (Kreatin-Monohydrat), DE/AT.">
+<style>
+  /* Committed single visual world: dark cinematic brand (tiger / magenta→orange).
+     color-scheme: dark declared intentionally — this brand lives in the dark. */
+  :root {
+    color-scheme: dark;
+    --ink: #0E0E11;
+    --surface: #17171C;
+    --surface-2: #201F27;
+    --magenta: #E11D74;
+    --orange: #F5A524;
+    --berry: #C81E45;
+    --bone: #F4F1F4;
+    --muted: #9A97A3;
+    --line: rgba(244,241,244,.10);
+    --grad: linear-gradient(100deg, #E11D74 0%, #F5A524 100%);
+    --grad-soft: linear-gradient(100deg, rgba(225,29,116,.16), rgba(245,165,36,.16));
+
+    --disp: 800 1em/0.95 'Arial Black', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --body: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+    --mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+
+    --wrap: 1180px;
+    --pad: clamp(18px, 5vw, 64px);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){ html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--ink); color: var(--bone); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+  .mono { font-family: var(--mono); }
+  .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+  h1,h2,h3 { font-family: var(--disp); text-transform: uppercase; letter-spacing: -.01em; text-wrap: balance; margin: 0; }
+  :focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 2px; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .6em; font-family: var(--mono); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; padding: 17px 30px; border: 0; cursor: pointer; background: var(--grad); color: #fff; transition: transform .16s ease, filter .16s ease; text-shadow: 0 1px 2px rgba(0,0,0,.25); }
+  .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+  .btn--ghost { background: transparent; color: var(--bone); box-shadow: inset 0 0 0 1.5px var(--line); text-shadow: none; }
+  .btn--ghost:hover { box-shadow: inset 0 0 0 1.5px var(--orange); }
+
+  /* announcement */
+  .anno { background: var(--grad); color: #fff; text-align: center; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; padding: 8px 14px; }
+  /* nav */
+  header.nav { position: sticky; top: 0; z-index: 60; background: rgba(14,14,17,.86); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .nav__row { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand svg { width: 30px; height: 30px; }
+  .brand__wm { font-family: var(--disp); font-size: 21px; letter-spacing: .02em; }
+  .brand__by { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; color: var(--muted); text-transform: uppercase; display: block; margin-top: -2px; }
+  .nav__links { display: flex; gap: 26px; }
+  .nav__links a { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .nav__links a:hover { color: var(--bone); }
+  .nav__cart { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; cursor: pointer; }
+  .nav__cart b { background: var(--grad); color: #fff; padding: 2px 8px; margin-left: 6px; }
+  @media (max-width: 760px){ .nav__links { display: none; } }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; }
+  .hero__glow { position: absolute; inset: -20% -10% auto auto; width: 70%; height: 120%; background: radial-gradient(50% 50% at 70% 35%, rgba(225,29,116,.22), transparent 70%), radial-gradient(40% 40% at 85% 60%, rgba(245,165,36,.16), transparent 70%); pointer-events: none; }
+  .hero__grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; padding: clamp(40px,6vw,80px) 0; }
+  @media (max-width: 900px){ .hero__grid { grid-template-columns: 1fr; gap: 24px; } }
+  .rate { display: flex; align-items: center; gap: 10px; margin: 18px 0 0; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .stars { color: var(--orange); letter-spacing: 2px; }
+  .hero h1 { font-size: clamp(40px, 7.5vw, 88px); line-height: .95; margin: 14px 0 0; }
+  .hero__sub { color: #cfccd4; max-width: 46ch; margin: 20px 0 0; font-size: clamp(16px,1.6vw,19px); }
+  .dose { display: inline-flex; flex-direction: column; margin: 26px 0 0; padding: 16px 22px; background: var(--grad-soft); border: 1px solid rgba(245,165,36,.3); border-radius: 4px; }
+  .dose b { font-family: var(--disp); font-size: clamp(26px,4vw,40px); line-height: 1; }
+  .dose span { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+  .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 26px 0 0; }
+  .hero__mini { display: flex; gap: 18px; flex-wrap: wrap; margin: 22px 0 0; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .hero__mini span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero__mini svg { width: 14px; height: 14px; }
+
+  /* product jar */
+  .jar-wrap { position: relative; display: flex; align-items: center; justify-content: center; min-height: 340px; }
+  .jar-wrap .disc { position: absolute; width: 78%; aspect-ratio: 1; border-radius: 50%; background: var(--grad-soft); filter: blur(8px); }
+  .jar { position: relative; width: min(340px, 82%); filter: drop-shadow(0 30px 46px rgba(0,0,0,.55)); }
+
+  /* trust bar */
+  .trust { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+  .trust__row { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(16px,4vw,52px); padding: 18px var(--pad); font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .trust__row span { display: inline-flex; align-items: center; gap: 8px; }
+  .trust__row svg { width: 16px; height: 16px; color: var(--orange); }
+
+  section { padding: clamp(56px, 8vw, 104px) 0; }
+  .sec-head { text-align: center; max-width: 42ch; margin: 0 auto 44px; }
+  .sec-head h2 { font-size: clamp(30px,5vw,58px); }
+  .sec-head p { color: var(--muted); margin: 14px 0 0; }
+
+  /* comparison */
+  .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 860px; margin: 0 auto; }
+  @media (max-width: 640px){ .cmp { grid-template-columns: 1fr; } }
+  .cmp__col { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
+  .cmp__col.in { opacity: 1; transform: none; }
+  .cmp__col.win { border-color: rgba(245,165,36,.4); background: var(--grad-soft); }
+  .cmp__h { font-family: var(--disp); text-transform: uppercase; font-size: 18px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .cmp__col.win .cmp__h { background: var(--grad); color: #fff; }
+  .cmp ul { list-style: none; margin: 0; padding: 8px 20px 18px; }
+  .cmp li { display: flex; gap: 10px; padding: 9px 0; font-size: 15px; border-bottom: 1px solid var(--line); }
+  .cmp li:last-child { border-bottom: 0; }
+  .cmp li svg { width: 17px; height: 17px; flex: none; margin-top: 3px; }
+  .cmp .yes { color: var(--orange); }
+  .cmp .no { color: var(--muted); }
+
+  /* benefits */
+  .bgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  @media (max-width: 820px){ .bgrid { grid-template-columns: 1fr; } }
+  .bcard { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 30px 26px; opacity: 0; transform: translateY(22px); transition: opacity .6s, transform .6s; }
+  .bcard.in { opacity: 1; transform: none; }
+  .bcard__ic { width: 46px; height: 46px; border-radius: 10px; background: var(--grad-soft); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .bcard__ic svg { width: 24px; height: 24px; color: var(--orange); }
+  .bcard h3 { font-size: 21px; margin-bottom: 10px; }
+  .bcard p { color: var(--muted); font-size: 15px; margin: 0; }
+  .bcard .legal { display: block; margin-top: 12px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; color: #6f6c78; }
+
+  /* dosage / facts signature */
+  .facts { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .facts__grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px){ .facts__grid { grid-template-columns: 1fr; gap: 30px; } }
+  .facts__big { font-family: var(--disp); font-size: clamp(64px,13vw,150px); line-height: .85; }
+  .facts__big small { display: block; font-family: var(--mono); font-size: 13px; letter-spacing: .16em; color: var(--muted); text-transform: uppercase; margin-top: 14px; -webkit-text-fill-color: var(--muted); }
+  table.sf { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13.5px; }
+  table.sf caption { text-align: left; font-family: var(--disp); text-transform: uppercase; font-size: 20px; padding-bottom: 10px; }
+  table.sf th, table.sf td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  table.sf td:last-child { text-align: right; color: var(--bone); }
+  table.sf th { color: var(--muted); font-weight: 400; }
+  .sf__note { font-family: var(--mono); font-size: 11px; color: #6f6c78; margin-top: 10px; }
+
+  /* bundles */
+  .bundles { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 900px; margin: 0 auto; }
+  @media (max-width: 760px){ .bundles { grid-template-columns: 1fr; } }
+  .bundle { position: relative; background: var(--surface); border: 1.5px solid var(--line); border-radius: 10px; padding: 26px 22px; cursor: pointer; transition: border-color .18s, transform .18s; text-align: center; }
+  .bundle:hover { transform: translateY(-3px); }
+  .bundle.sel { border-color: transparent; box-shadow: 0 0 0 2px var(--orange); }
+  .bundle.best { background: var(--grad-soft); }
+  .bundle__tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--grad); color: #fff; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+  .bundle__qty { font-family: var(--disp); font-size: 30px; text-transform: uppercase; }
+  .bundle__unit { font-family: var(--mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin: 4px 0 14px; }
+  .bundle__price { font-family: var(--disp); font-size: 30px; }
+  .bundle__was { font-family: var(--mono); font-size: 13px; color: var(--muted); text-decoration: line-through; margin-top: 4px; }
+  .bundle__radio { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line); margin: 16px auto 0; position: relative; }
+  .bundle.sel .bundle__radio { border-color: var(--orange); }
+  .bundle.sel .bundle__radio::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--grad); }
+  .buy-cta { max-width: 900px; margin: 26px auto 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .buy-cta .btn { width: 100%; max-width: 460px; padding: 20px; font-size: 15px; }
+  .buy-cta .guarantee { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  /* reviews */
+  .rv-head { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 8px; }
+  .rv-head .num { font-family: var(--disp); font-size: 40px; }
+  .rvgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 36px; }
+  @media (max-width: 820px){ .rvgrid { grid-template-columns: 1fr; } }
+  .rv { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 22px; }
+  .rv__s { color: var(--orange); letter-spacing: 2px; font-size: 13px; }
+  .rv__t { font-weight: 700; margin: 10px 0 6px; }
+  .rv p { color: var(--muted); font-size: 14.5px; margin: 0 0 14px; }
+  .rv__by { font-family: var(--mono); font-size: 11px; color: #6f6c78; letter-spacing: .04em; display: flex; align-items: center; gap: 8px; }
+  .rv__vf { color: var(--orange); }
+
+  /* faq */
+  .faq { max-width: 760px; margin: 0 auto; }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary { cursor: pointer; list-style: none; padding: 20px 0; display: flex; justify-content: space-between; gap: 16px; font-weight: 700; font-size: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--mono); color: var(--orange); font-size: 22px; line-height: 1; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq__b { padding: 0 0 20px; color: var(--muted); font-size: 15px; }
+
+  /* disclaimer */
+  .disc-sec { background: var(--surface); border-top: 1px solid var(--line); }
+  .disc-sec .wrap { padding-top: 40px; padding-bottom: 40px; }
+  .disc-sec p { color: var(--muted); font-size: 13px; max-width: 80ch; margin: 0 auto; text-align: center; font-family: var(--mono); line-height: 1.7; }
+
+  footer { background: #0a0a0d; padding: 48px 0 120px; }
+  .foot__row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 26px; }
+  .foot__col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--bone); margin: 0 0 12px; }
+  .foot__col a { display: block; color: var(--muted); font-size: 14px; padding: 4px 0; }
+  .foot__col a:hover { color: var(--orange); }
+  .foot__legal { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  /* sticky mobile buy bar */
+  .sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; background: rgba(14,14,17,.94); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 10px var(--pad); display: none; align-items: center; justify-content: space-between; gap: 12px; }
+  .sticky b { font-family: var(--disp); font-size: 20px; }
+  .sticky .btn { padding: 14px 22px; }
+  @media (max-width: 760px){ .sticky { display: flex; } }
+
+  .toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%,160%); background: var(--grad); color: #fff; font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; padding: 14px 24px; border-radius: 6px; z-index: 90; transition: transform .35s cubic-bezier(.2,.9,.3,1.2); box-shadow: 0 14px 34px rgba(0,0,0,.4); }
+  .toast.show { transform: translate(-50%,0); }
+
+  .protonote { background: var(--surface-2); color: var(--muted); font-family: var(--mono); font-size: 11px; text-align: center; padding: 9px var(--pad); letter-spacing: .04em; }
+
+  svg.grad-def { position: absolute; width: 0; height: 0; }
+</style>
+
+<svg class="grad-def" aria-hidden="true"><defs><linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E11D74"/><stop offset="1" stop-color="#F5A524"/></linearGradient></defs></svg>
+
+<div class="anno">Versand aus EU-Lager · 2–5 Werktage DE &amp; AT · 30 Tage Rückgabe</div>
+
+<header class="nav">
+  <div class="wrap nav__row">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M14 8 L22 20 L14 24 Z M50 8 L42 20 L50 24 Z" fill="url(#ag)"/>
+        <path d="M32 14 C46 14 54 26 54 40 C54 52 44 58 32 58 C20 58 10 52 10 40 C10 26 18 14 32 14 Z" fill="none" stroke="url(#ag)" stroke-width="2.4"/>
+        <path d="M24 34 q-6 2 -10 -1 M40 34 q6 2 10 -1 M32 40 l0 8 M26 46 q6 4 12 0" fill="none" stroke="url(#ag)" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="25" cy="33" r="2.4" fill="url(#ag)"/><circle cx="39" cy="33" r="2.4" fill="url(#ag)"/>
+      </svg>
+      <div>
+        <span class="brand__wm grad-text">Athlesio</span>
+        <span class="brand__by">by Davide Martino</span>
+      </div>
+    </div>
+    <nav class="nav__links">
+      <a href="#warum">Warum</a>
+      <a href="#wirkung">Wirkung</a>
+      <a href="#facts">Inhalt</a>
+      <a href="#preise">Preise</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav__cart" onclick="scrollTo(0,document.body.scrollHeight)">Warenkorb <b id="cc">0</b></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" style="padding:0">
+  <div class="hero__glow"></div>
+  <div class="wrap hero__grid">
+    <div>
+      <span class="eyebrow">Kreatin-Monohydrat · Gummies</span>
+      <div class="rate"><span class="stars">★★★★★</span> 4,8 / 5 · 1.240+ zufriedene Kund:innen</div>
+      <h1>Kreatin, das du <span class="grad-text">kauen</span> kannst.</h1>
+      <p class="hero__sub">5.000 mg Kreatin-Monohydrat pro Portion – im Beeren-Gummi. Kein Shaker, kein Pulver, kein Klumpen. Einfach 3 Gummies am Tag.</p>
+      <div class="dose">
+        <b class="grad-text">5.000 mg</b>
+        <span>Kreatin / Portion · 120 Gummies / Dose</span>
+      </div>
+      <div class="hero__cta">
+        <button class="btn" onclick="document.getElementById('preise').scrollIntoView()">Jetzt sichern</button>
+        <a class="btn btn--ghost" href="#warum">Warum Gummies?</a>
+      </div>
+      <div class="hero__mini">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="url(#ag)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Zuckerfrei</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="url(#ag)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Vegan</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="url(#ag)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Non-GMO</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="url(#ag)" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Glutenfrei</span>
+      </div>
+    </div>
+    <div class="jar-wrap">
+      <div class="disc"></div>
+      <svg class="jar" viewBox="0 0 300 360" aria-label="Athlesio Muscle Boost Gummies Dose">
+        <rect x="70" y="14" width="160" height="40" rx="10" fill="#111014" stroke="url(#ag)" stroke-width="2"/>
+        <rect x="60" y="54" width="180" height="288" rx="20" fill="#141319"/>
+        <rect x="60" y="54" width="180" height="288" rx="20" fill="none" stroke="url(#ag)" stroke-width="2" opacity=".5"/>
+        <rect x="74" y="92" width="152" height="212" rx="10" fill="#1c1b22"/>
+        <text x="150" y="140" text-anchor="middle" fill="#F4F1F4" font-family="Arial Black, sans-serif" font-size="30" letter-spacing="1">CREATINE</text>
+        <text x="150" y="166" text-anchor="middle" fill="#9A97A3" font-family="Arial Black, sans-serif" font-size="16" letter-spacing="3">MONOHYDRATE</text>
+        <rect x="92" y="182" width="116" height="30" rx="6" fill="url(#ag)"/>
+        <text x="150" y="203" text-anchor="middle" fill="#fff" font-family="Arial Black, sans-serif" font-size="15" letter-spacing="1">5.000 MG</text>
+        <text x="150" y="234" text-anchor="middle" fill="#9A97A3" font-family="ui-monospace, monospace" font-size="11" letter-spacing="2">120 GUMMIES · BEERE</text>
+        <circle cx="120" cy="272" r="15" fill="#C81E45"/><circle cx="150" cy="278" r="16" fill="#7d1f6b"/><circle cx="182" cy="270" r="14" fill="#C81E45"/>
+        <text x="150" y="326" text-anchor="middle" fill="#6f6c78" font-family="ui-monospace, monospace" font-size="10" letter-spacing="3">ATHLESIO</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="trust__row">
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Laborgeprüft</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Vegan &amp; Non-GMO</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Zuckerfrei</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Glutenfrei</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg> Versand DE &amp; AT</span>
+  </div>
+</div>
+
+<!-- WARUM / COMPARISON -->
+<section id="warum">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Gummies vs. Pulver</span>
+      <h2>Schluss mit Pulver-Chaos</h2>
+      <p>Kreatin ist eines der am besten untersuchten Supplements – nur will niemand jeden Tag Pulver abwiegen und Klümpchen runterwürgen.</p>
+    </div>
+    <div class="cmp">
+      <div class="cmp__col win reveal">
+        <div class="cmp__h">Athlesio Gummies</div>
+        <ul>
+          <li><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> 5.000 mg fix pro Portion – nichts abwiegen</li>
+          <li><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Einfach kauen – kein Shaker</li>
+          <li><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Beerengeschmack, zuckerfrei</li>
+          <li><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Passt in jede Tasche</li>
+        </ul>
+      </div>
+      <div class="cmp__col reveal">
+        <div class="cmp__h">Klassisches Pulver</div>
+        <ul>
+          <li><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Jede Portion abwiegen</li>
+          <li><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Shaker, anrühren, spülen</li>
+          <li><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Oft kreidiger Geschmack</li>
+          <li><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Unterwegs unpraktisch</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WIRKUNG -->
+<section id="wirkung" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Was drin ist – und was es bringt</span>
+      <h2>Voll dosiert. Ehrlich kommuniziert.</h2>
+    </div>
+    <div class="bgrid">
+      <div class="bcard reveal">
+        <div class="bcard__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+        <h3>Kraft &amp; Leistung</h3>
+        <p>Kreatin erhöht die körperliche Leistung bei Schnellkrafttraining im Rahmen kurzzeitiger intensiver körperlicher Betätigung.</p>
+        <span class="legal">Bei täglicher Aufnahme von 3 g Kreatin. Für Erwachsene mit intensiver körperlicher Betätigung.</span>
+      </div>
+      <div class="bcard reveal">
+        <div class="bcard__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+        <h3>Energie &amp; weniger Müdigkeit</h3>
+        <p>Vitamin B6 und B12 tragen zu einem normalen Energiestoffwechsel und zur Verringerung von Müdigkeit und Ermüdung bei.</p>
+        <span class="legal">Zugelassene Angaben gem. HCVO für Vitamin B6 &amp; B12.</span>
+      </div>
+      <div class="bcard reveal">
+        <div class="bcard__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3v4M3 5h4M6 17v4M4 19h4M13 3l2.5 6.5L22 12l-6.5 2.5L13 21l-2.5-6.5L4 12l6.5-2.5z"/></svg></div>
+        <h3>Einfach im Alltag</h3>
+        <p>3 Gummies täglich, kauen, fertig. Mit L-Carnitin, BCAA 2:1:1 und Taurin. Kein Shaker, kein Abwiegen, unterwegs dabei.</p>
+        <span class="legal">L-Carnitin, BCAA &amp; Taurin als Inhaltsstoffe – ohne Wirkversprechen.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FACTS / DOSAGE SIGNATURE -->
+<div class="facts">
+  <section style="padding-top:clamp(48px,7vw,88px);padding-bottom:clamp(48px,7vw,88px)">
+    <div class="wrap facts__grid">
+      <div>
+        <span class="eyebrow">Dosis-Transparenz</span>
+        <div class="facts__big grad-text">5.000<small>mg Kreatin pro Portion (3 Gummies)</small></div>
+      </div>
+      <div>
+        <table class="sf">
+          <caption>Nährwerte pro Portion</caption>
+          <tbody>
+            <tr><th>Portionsgröße</th><td>3 Gummies</td></tr>
+            <tr><th>Portionen / Dose</th><td>40 (120 Stück)</td></tr>
+            <tr><th>Kreatin-Monohydrat</th><td>5.000 mg</td></tr>
+            <tr><th>L-Carnitin</th><td>1.000 mg</td></tr>
+            <tr><th>BCAA 2:1:1</th><td>1.000 mg</td></tr>
+            <tr><th>Taurin</th><td>1.000 mg</td></tr>
+            <tr><th>Vitamin B6</th><td>5 mg (357 % NRV)</td></tr>
+            <tr><th>Vitamin B12</th><td>50 µg (2.000 % NRV)</td></tr>
+          </tbody>
+        </table>
+        <p class="sf__note">Zuckerfrei · Vegan · Non-GMO · Glutenfrei. Zutaten &amp; Allergene siehe Etikett.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- BUNDLES / PREISE -->
+<section id="preise">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Dein Vorrat</span>
+      <h2>Wähle dein Paket</h2>
+      <p>Kreatin wirkt bei täglicher, dauerhafter Einnahme – mit dem Mehrfach-Vorrat sparst du und bleibst dran.</p>
+    </div>
+    <div class="bundles">
+      <div class="bundle" data-price="29,95 €" data-name="1 Dose" onclick="selBundle(this)">
+        <div class="bundle__qty">1 Dose</div>
+        <div class="bundle__unit">29,95 € / Dose</div>
+        <div class="bundle__price grad-text">29,95 €</div>
+        <div class="bundle__was">39,95 €</div>
+        <div class="bundle__radio"></div>
+      </div>
+      <div class="bundle sel" data-price="54,95 €" data-name="2 Dosen" onclick="selBundle(this)">
+        <div class="bundle__tag">Beliebt</div>
+        <div class="bundle__qty">2 Dosen</div>
+        <div class="bundle__unit">27,48 € / Dose</div>
+        <div class="bundle__price grad-text">54,95 €</div>
+        <div class="bundle__was">79,90 €</div>
+        <div class="bundle__radio"></div>
+      </div>
+      <div class="bundle best" data-price="74,95 €" data-name="3 Dosen" onclick="selBundle(this)">
+        <div class="bundle__tag">Beste Wahl · Kur</div>
+        <div class="bundle__qty">3 Dosen</div>
+        <div class="bundle__unit">24,98 € / Dose</div>
+        <div class="bundle__price grad-text">74,95 €</div>
+        <div class="bundle__was">119,85 €</div>
+        <div class="bundle__radio"></div>
+      </div>
+    </div>
+    <div class="buy-cta">
+      <button class="btn" onclick="addCart()">In den Warenkorb – <span id="selPrice">54,95 €</span></button>
+      <div class="guarantee">30 Tage Rückgaberecht · Versand 2–5 Werktage DE &amp; AT</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="rv-head"><span class="num grad-text">4,8</span><span class="stars" style="font-size:22px;color:var(--orange)">★★★★★</span></div>
+      <span class="eyebrow">1.240+ Bewertungen</span>
+    </div>
+    <div class="rvgrid">
+      <div class="rv">
+        <div class="rv__s">★★★★★</div>
+        <div class="rv__t">Endlich kein Shaker mehr</div>
+        <p>Nehme Kreatin seit Jahren, aber das Pulver-Ritual hat genervt. Die Gummies schmecken nach Beere und ich vergesse sie nie mehr.</p>
+        <div class="rv__by"><svg class="rv__vf" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Lena K. · Verifizierter Kauf</div>
+      </div>
+      <div class="rv">
+        <div class="rv__s">★★★★★</div>
+        <div class="rv__t">Volle Dosis, kein Kompromiss</div>
+        <p>Habe extra aufs Etikett geschaut – 5 g Kreatin pro Portion, das ist echt voll dosiert. Viele andere Gummies sparen da. Top.</p>
+        <div class="rv__by"><svg class="rv__vf" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Marco T. · Verifizierter Kauf</div>
+      </div>
+      <div class="rv">
+        <div class="rv__s">★★★★★</div>
+        <div class="rv__t">Perfekt fürs Büro</div>
+        <p>Dose steht am Schreibtisch, 3 Gummies nach dem Mittag und gut. Schnell geliefert nach Österreich.</p>
+        <div class="rv__by"><svg class="rv__vf" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Sophie R. · Verifizierter Kauf</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Häufige Fragen</span><h2>Gut zu wissen</h2></div>
+    <div class="faq">
+      <details open><summary>Wie viele Gummies pro Tag?<span></span></summary><div class="faq__b">3 Gummies täglich – das entspricht 5.000 mg Kreatin-Monohydrat pro Portion.</div></details>
+      <details><summary>Schmeckt es künstlich?<span></span></summary><div class="faq__b">Nein – Beerengeschmack aus natürlichen Aromen (Himbeere, Brombeere, Blaubeere), komplett zuckerfrei.</div></details>
+      <details><summary>Ist es vegan?<span></span></summary><div class="faq__b">Ja, vegan, Non-GMO und glutenfrei – ohne Gelatine.</div></details>
+      <details><summary>Wann sehe ich Ergebnisse?<span></span></summary><div class="faq__b">Kreatin entfaltet seine Wirkung bei täglicher, dauerhafter Einnahme. Plane mindestens eine mehrwöchige Kur ein – dafür gibt es den 2er- und 3er-Vorrat.</div></details>
+      <details><summary>Wie schnell ist die Lieferung?<span></span></summary><div class="faq__b">Versand aus dem EU-Lager, 2–5 Werktage nach Deutschland &amp; Österreich, inkl. Tracking.</div></details>
+      <details><summary>Rückgabe möglich?<span></span></summary><div class="faq__b">Ja, 30 Tage Rückgaberecht auf ungeöffnete Dosen.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disc-sec">
+  <div class="wrap">
+    <p>Nahrungsergänzungsmittel sind kein Ersatz für eine ausgewogene, abwechslungsreiche Ernährung und eine gesunde Lebensweise. Die empfohlene tägliche Verzehrmenge (3 Gummies) nicht überschreiten. Außerhalb der Reichweite von kleinen Kindern aufbewahren. Für Erwachsene. Die positive Wirkung von Kreatin stellt sich bei einer täglichen Aufnahme von 3 g ein, für Erwachsene, die intensiver körperlicher Betätigung nachgehen.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot__row">
+      <div class="foot__col">
+        <div class="brand"><span class="brand__wm grad-text">Athlesio</span></div>
+        <p style="color:var(--muted);font-size:13px;max-width:24ch;margin:10px 0 0">Kreatin, das du kauen kannst. by Davide Martino.</p>
+      </div>
+      <div class="foot__col"><h4>Shop</h4><a href="#preise">Muscle Boost Gummies</a><a href="#facts">Inhaltsstoffe</a><a href="#faq">FAQ</a></div>
+      <div class="foot__col"><h4>Service</h4><a>Versand &amp; Lieferzeit</a><a>Rückgabe</a><a>Kontakt</a></div>
+      <div class="foot__col"><h4>Rechtliches</h4><a>Impressum</a><a>AGB</a><a>Widerruf</a><a>Datenschutz</a></div>
+    </div>
+    <div class="foot__legal"><span>© 2026 Athlesio · athlesio.at</span><span>Prototyp · Bewertungen &amp; Preise sind Platzhalter</span></div>
+  </div>
+</footer>
+
+<div class="sticky">
+  <div><span class="mono" style="font-size:11px;color:var(--muted);display:block">Muscle Boost · <span id="stName">2 Dosen</span></span><b class="grad-text" id="stPrice">54,95 €</b></div>
+  <button class="btn" onclick="addCart()">In den Warenkorb</button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">In den Warenkorb gelegt</div>
+
+<script>
+  var sel = { name: "2 Dosen", price: "54,95 €" };
+  function selBundle(el){
+    document.querySelectorAll('.bundle').forEach(function(b){ b.classList.remove('sel'); });
+    el.classList.add('sel');
+    sel.name = el.dataset.name; sel.price = el.dataset.price;
+    document.getElementById('selPrice').textContent = sel.price;
+    document.getElementById('stPrice').textContent = sel.price;
+    document.getElementById('stName').textContent = sel.name;
+  }
+  var cart = 0;
+  function addCart(){
+    cart++; document.getElementById('cc').textContent = cart;
+    var t = document.getElementById('toast');
+    t.textContent = sel.name + ' · ' + sel.price + ' — im Warenkorb';
+    t.classList.add('show');
+    clearTimeout(window._t); window._t = setTimeout(function(){ t.classList.remove('show'); }, 2000);
+  }
+  // reveal on scroll
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); }
+  else {
+    var io = new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); } }); }, { threshold: .2 });
+    els.forEach(function(e){ io.observe(e); });
+  }
+</script>

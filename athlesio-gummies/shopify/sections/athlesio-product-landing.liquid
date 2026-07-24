@@ -1,0 +1,351 @@
+{%- comment -%}
+  Athlesio Muscle Boost — Product Landing Section
+  ------------------------------------------------
+  Drop this file into your Shopify theme under /sections/ (e.g. Dawn-based theme).
+  Add it to a Page template or the Product template via the Theme Customizer
+  ("Add section" → "Athlesio Product Landing"). All texts/prices are editable
+  in the customizer. The buy button uses Shopify's native /cart/add form, so it
+  works with your real product + variant.
+
+  Tiered bundle pricing (2er/3er cheaper per unit) needs a Shopify *automatic
+  discount* or a bundle app — this section adds the chosen quantity to cart and
+  shows the target price; set matching automatic discounts in Shopify Admin →
+  Discounts. See docs/shopify-deploy-guide.md.
+{%- endcomment -%}
+
+{%- assign p = section.settings.product -%}
+
+<div class="ath" style="--ath-magenta:{{ section.settings.color_magenta }};--ath-orange:{{ section.settings.color_orange }};">
+  {%- if section.settings.announcement != blank -%}
+    <div class="ath-anno">{{ section.settings.announcement }}</div>
+  {%- endif -%}
+
+  <!-- HERO -->
+  <section class="ath-hero">
+    <div class="ath-hero__glow" aria-hidden="true"></div>
+    <div class="ath-wrap ath-hero__grid">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="ath-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <div class="ath-rate"><span class="ath-stars">★★★★★</span> {{ section.settings.rating_text }}</div>
+        <h1 class="ath-h1">{{ section.settings.headline }}</h1>
+        <p class="ath-sub">{{ section.settings.subline }}</p>
+        <div class="ath-dose">
+          <b class="ath-grad">{{ section.settings.dose_number }}</b>
+          <span>{{ section.settings.dose_label }}</span>
+        </div>
+
+        {%- if p != blank -%}
+          {%- form 'product', p, id: 'ath-hero-form', class: 'ath-form' -%}
+            <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+            <input type="hidden" name="quantity" value="1" id="ath-qty-input">
+            <div class="ath-cta">
+              <button type="submit" class="ath-btn">{{ section.settings.cta_label }}</button>
+              <a class="ath-btn ath-btn--ghost" href="#ath-warum">{{ section.settings.cta_secondary }}</a>
+            </div>
+          {%- endform -%}
+        {%- else -%}
+          <div class="ath-cta">
+            <a class="ath-btn" href="#ath-preise">{{ section.settings.cta_label }}</a>
+            <a class="ath-btn ath-btn--ghost" href="#ath-warum">{{ section.settings.cta_secondary }}</a>
+          </div>
+          <p class="ath-note">⚠︎ Kein Produkt verknüpft — wähle in den Section-Einstellungen dein Produkt aus.</p>
+        {%- endif -%}
+
+        <div class="ath-mini">
+          {%- assign badges = section.settings.hero_badges | split: ',' -%}
+          {%- for b in badges -%}<span>✓ {{ b | strip }}</span>{%- endfor -%}
+        </div>
+      </div>
+      <div class="ath-jar-wrap">
+        <div class="ath-disc" aria-hidden="true"></div>
+        {%- if section.settings.product_image != blank -%}
+          <img class="ath-jar" src="{{ section.settings.product_image | image_url: width: 700 }}" alt="{{ p.title | default: section.settings.headline | escape }}" width="340" height="408" loading="eager">
+        {%- elsif p != blank and p.featured_image -%}
+          <img class="ath-jar" src="{{ p.featured_image | image_url: width: 700 }}" alt="{{ p.title | escape }}" width="340" height="408" loading="eager">
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <div class="ath-trust">
+    <div class="ath-trust__row">
+      {%- assign tb = section.settings.trust_badges | split: ',' -%}
+      {%- for b in tb -%}<span>✓ {{ b | strip }}</span>{%- endfor -%}
+    </div>
+  </div>
+
+  <!-- WARUM / COMPARISON -->
+  <section id="ath-warum" class="ath-section">
+    <div class="ath-wrap">
+      <div class="ath-sec-head">
+        <span class="ath-eyebrow">{{ section.settings.cmp_eyebrow }}</span>
+        <h2 class="ath-h2">{{ section.settings.cmp_title }}</h2>
+        <p>{{ section.settings.cmp_text }}</p>
+      </div>
+      <div class="ath-cmp">
+        <div class="ath-cmp__col ath-cmp__col--win">
+          <div class="ath-cmp__h">{{ section.settings.cmp_a_title }}</div>
+          <ul>
+            {%- assign aitems = section.settings.cmp_a_items | newline_to_br | split: '<br />' -%}
+            {%- for i in aitems -%}{%- if i | strip != '' -%}<li class="ath-yes">✓ {{ i | strip }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+        </div>
+        <div class="ath-cmp__col">
+          <div class="ath-cmp__h">{{ section.settings.cmp_b_title }}</div>
+          <ul>
+            {%- assign bitems = section.settings.cmp_b_items | newline_to_br | split: '<br />' -%}
+            {%- for i in bitems -%}{%- if i | strip != '' -%}<li class="ath-no">✕ {{ i | strip }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACTS / DOSAGE -->
+  <div class="ath-facts">
+    <section class="ath-section">
+      <div class="ath-wrap ath-facts__grid">
+        <div>
+          <span class="ath-eyebrow">{{ section.settings.facts_eyebrow }}</span>
+          <div class="ath-facts__big ath-grad">{{ section.settings.facts_number }}<small>{{ section.settings.facts_sub }}</small></div>
+        </div>
+        <div>
+          <table class="ath-sf">
+            <caption>{{ section.settings.facts_table_title }}</caption>
+            <tbody>
+              {%- assign rows = section.settings.facts_rows | newline_to_br | split: '<br />' -%}
+              {%- for r in rows -%}
+                {%- assign cols = r | split: '|' -%}
+                {%- if cols.size == 2 -%}<tr><th>{{ cols[0] | strip }}</th><td>{{ cols[1] | strip }}</td></tr>{%- endif -%}
+              {%- endfor -%}
+            </tbody>
+          </table>
+          <p class="ath-sf__note">{{ section.settings.facts_note }}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- BUNDLES -->
+  <section id="ath-preise" class="ath-section">
+    <div class="ath-wrap">
+      <div class="ath-sec-head">
+        <span class="ath-eyebrow">{{ section.settings.price_eyebrow }}</span>
+        <h2 class="ath-h2">{{ section.settings.price_title }}</h2>
+        <p>{{ section.settings.price_text }}</p>
+      </div>
+      <div class="ath-bundles">
+        {%- for i in (1..3) -%}
+          {%- assign q = 'bundle_' | append: i | append: '_qty' -%}
+          {%- assign lbl = 'bundle_' | append: i | append: '_label' -%}
+          {%- assign unit = 'bundle_' | append: i | append: '_unit' -%}
+          {%- assign price = 'bundle_' | append: i | append: '_price' -%}
+          {%- assign was = 'bundle_' | append: i | append: '_was' -%}
+          {%- assign tag = 'bundle_' | append: i | append: '_tag' -%}
+          {%- assign best = 'bundle_' | append: i | append: '_best' -%}
+          <div class="ath-bundle{% if section.settings[best] %} ath-bundle--best sel{% endif %}"
+               data-qty="{{ section.settings[q] }}" data-price="{{ section.settings[price] }}" data-name="{{ section.settings[lbl] }}"
+               tabindex="0" role="button" aria-pressed="{{ section.settings[best] }}">
+            {%- if section.settings[tag] != blank -%}<div class="ath-bundle__tag">{{ section.settings[tag] }}</div>{%- endif -%}
+            <div class="ath-bundle__qty">{{ section.settings[lbl] }}</div>
+            <div class="ath-bundle__unit">{{ section.settings[unit] }}</div>
+            <div class="ath-bundle__price ath-grad">{{ section.settings[price] }}</div>
+            {%- if section.settings[was] != blank -%}<div class="ath-bundle__was">{{ section.settings[was] }}</div>{%- endif -%}
+            <div class="ath-bundle__radio"></div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="ath-buy-cta">
+        <button class="ath-btn" id="ath-buy" type="button">{{ section.settings.cta_label }} — <span id="ath-sel-price">{{ section.settings.bundle_2_price }}</span></button>
+        <div class="ath-guarantee">{{ section.settings.guarantee_text }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER -->
+  {%- if section.settings.disclaimer != blank -%}
+    <div class="ath-disc-sec"><div class="ath-wrap"><p>{{ section.settings.disclaimer }}</p></div></div>
+  {%- endif -%}
+</div>
+
+{%- if p != blank -%}
+<script>
+  (function(){
+    var bundles = document.querySelectorAll('.ath-bundle');
+    var qtyInput = document.getElementById('ath-qty-input');
+    var selPrice = document.getElementById('ath-sel-price');
+    var sel = { qty: {{ section.settings.bundle_2_qty | default: 2 }}, price: "{{ section.settings.bundle_2_price }}" };
+    function pick(el){
+      bundles.forEach(function(b){ b.classList.remove('sel'); b.setAttribute('aria-pressed','false'); });
+      el.classList.add('sel'); el.setAttribute('aria-pressed','true');
+      sel.qty = el.dataset.qty; sel.price = el.dataset.price;
+      if(qtyInput) qtyInput.value = sel.qty;
+      if(selPrice) selPrice.textContent = sel.price;
+    }
+    bundles.forEach(function(b){
+      b.addEventListener('click', function(){ pick(b); });
+      b.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(b); } });
+    });
+    var buy = document.getElementById('ath-buy');
+    if(buy) buy.addEventListener('click', function(){
+      if(qtyInput) qtyInput.value = sel.qty;
+      var form = document.getElementById('ath-hero-form');
+      if(form) form.submit();
+    });
+  })();
+</script>
+{%- endif -%}
+
+{% stylesheet %}
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Russo+One&display=swap');
+.ath { --ath-ink:#0E0E11; --ath-surface:#17171C; --ath-bone:#F4F1F4; --ath-muted:#9A97A3; --ath-line:rgba(244,241,244,.10);
+  --ath-grad: linear-gradient(100deg, var(--ath-magenta,#E11D74), var(--ath-orange,#F5A524));
+  --ath-grad-soft: linear-gradient(100deg, rgba(225,29,116,.16), rgba(245,165,36,.16));
+  background:var(--ath-ink); color:var(--ath-bone); font-family:'Chakra Petch',system-ui,sans-serif; }
+.ath *{ box-sizing:border-box; }
+.ath-wrap{ max-width:1180px; margin:0 auto; padding:0 clamp(18px,5vw,64px); }
+.ath-grad{ background:var(--ath-grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.ath-eyebrow{ font-family:'Chakra Petch',monospace; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--ath-muted); }
+.ath h1,.ath h2{ font-family:'Russo One',system-ui,sans-serif; text-transform:uppercase; letter-spacing:-.01em; margin:0; }
+.ath-anno{ background:var(--ath-grad); color:#fff; text-align:center; font-size:12px; letter-spacing:.06em; padding:8px; }
+.ath-btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5em; font-family:'Chakra Petch',monospace; font-size:13px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; padding:17px 30px; border:0; cursor:pointer; background:var(--ath-grad); color:#fff; transition:transform .16s,filter .16s; text-decoration:none; }
+.ath-btn:hover{ transform:translateY(-2px); filter:brightness(1.08); }
+.ath-btn--ghost{ background:transparent; color:var(--ath-bone); box-shadow:inset 0 0 0 1.5px var(--ath-line); }
+.ath-btn--ghost:hover{ box-shadow:inset 0 0 0 1.5px var(--ath-orange,#F5A524); }
+.ath-hero{ position:relative; overflow:hidden; }
+.ath-hero__glow{ position:absolute; inset:-20% -10% auto auto; width:70%; height:120%; background:radial-gradient(50% 50% at 70% 35%, rgba(225,29,116,.22), transparent 70%); pointer-events:none; }
+.ath-hero__grid{ position:relative; display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center; padding:clamp(40px,6vw,80px) clamp(18px,5vw,64px); }
+.ath-rate{ display:flex; gap:10px; align-items:center; margin-top:16px; font-size:14px; color:var(--ath-muted); }
+.ath-stars{ color:var(--ath-orange,#F5A524); letter-spacing:2px; }
+.ath-h1{ font-size:clamp(38px,7vw,86px); line-height:.95; margin-top:14px; }
+.ath-sub{ color:#cfccd4; max-width:46ch; margin-top:18px; font-size:clamp(16px,1.6vw,19px); }
+.ath-dose{ display:inline-flex; flex-direction:column; margin-top:24px; padding:16px 22px; background:var(--ath-grad-soft); border:1px solid rgba(245,165,36,.3); border-radius:4px; }
+.ath-dose b{ font-family:'Russo One',sans-serif; font-size:clamp(26px,4vw,40px); line-height:1; }
+.ath-dose span{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ath-muted); margin-top:6px; }
+.ath-cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+.ath-mini{ display:flex; gap:16px; flex-wrap:wrap; margin-top:20px; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--ath-muted); }
+.ath-note{ color:var(--ath-orange,#F5A524); font-size:12px; margin-top:10px; }
+.ath-jar-wrap{ position:relative; display:flex; align-items:center; justify-content:center; min-height:320px; }
+.ath-disc{ position:absolute; width:78%; aspect-ratio:1; border-radius:50%; background:var(--ath-grad-soft); filter:blur(10px); }
+.ath-jar{ position:relative; width:min(340px,82%); height:auto; filter:drop-shadow(0 30px 46px rgba(0,0,0,.55)); }
+.ath-trust{ border-top:1px solid var(--ath-line); border-bottom:1px solid var(--ath-line); background:var(--ath-surface); }
+.ath-trust__row{ display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(16px,4vw,52px); padding:18px; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ath-muted); }
+.ath-section{ padding:clamp(52px,8vw,100px) 0; }
+.ath-sec-head{ text-align:center; max-width:44ch; margin:0 auto 40px; }
+.ath-h2{ font-size:clamp(30px,5vw,56px); }
+.ath-sec-head p{ color:var(--ath-muted); margin-top:12px; }
+.ath-cmp{ display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:860px; margin:0 auto; }
+.ath-cmp__col{ border:1px solid var(--ath-line); border-radius:6px; overflow:hidden; }
+.ath-cmp__col--win{ border-color:rgba(245,165,36,.4); background:var(--ath-grad-soft); }
+.ath-cmp__h{ font-family:'Russo One',sans-serif; text-transform:uppercase; font-size:18px; padding:16px 20px; border-bottom:1px solid var(--ath-line); }
+.ath-cmp__col--win .ath-cmp__h{ background:var(--ath-grad); color:#fff; }
+.ath-cmp ul{ list-style:none; margin:0; padding:8px 20px 18px; }
+.ath-cmp li{ padding:9px 0; font-size:15px; border-bottom:1px solid var(--ath-line); }
+.ath-cmp li:last-child{ border-bottom:0; }
+.ath-yes{ color:var(--ath-bone); } .ath-no{ color:var(--ath-muted); }
+.ath-facts{ background:var(--ath-surface); border-top:1px solid var(--ath-line); border-bottom:1px solid var(--ath-line); }
+.ath-facts__grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:48px; align-items:center; }
+.ath-facts__big{ font-family:'Russo One',sans-serif; font-size:clamp(60px,12vw,140px); line-height:.85; }
+.ath-facts__big small{ display:block; font-size:13px; letter-spacing:.14em; color:var(--ath-muted); text-transform:uppercase; margin-top:14px; -webkit-text-fill-color:var(--ath-muted); }
+.ath-sf{ width:100%; border-collapse:collapse; font-size:14px; }
+.ath-sf caption{ text-align:left; font-family:'Russo One',sans-serif; text-transform:uppercase; font-size:20px; padding-bottom:10px; }
+.ath-sf th,.ath-sf td{ text-align:left; padding:10px 8px; border-bottom:1px solid var(--ath-line); font-variant-numeric:tabular-nums; }
+.ath-sf td{ text-align:right; }
+.ath-sf th{ color:var(--ath-muted); font-weight:400; }
+.ath-sf__note{ font-size:12px; color:#6f6c78; margin-top:10px; }
+.ath-bundles{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:900px; margin:0 auto; }
+.ath-bundle{ position:relative; background:var(--ath-surface); border:1.5px solid var(--ath-line); border-radius:10px; padding:26px 22px; cursor:pointer; transition:border-color .18s,transform .18s; text-align:center; }
+.ath-bundle:hover{ transform:translateY(-3px); }
+.ath-bundle.sel{ border-color:transparent; box-shadow:0 0 0 2px var(--ath-orange,#F5A524); }
+.ath-bundle--best{ background:var(--ath-grad-soft); }
+.ath-bundle__tag{ position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--ath-grad); color:#fff; font-size:10px; letter-spacing:.1em; text-transform:uppercase; padding:4px 12px; border-radius:20px; white-space:nowrap; }
+.ath-bundle__qty{ font-family:'Russo One',sans-serif; font-size:26px; text-transform:uppercase; }
+.ath-bundle__unit{ font-size:11px; color:var(--ath-muted); text-transform:uppercase; letter-spacing:.08em; margin:4px 0 14px; }
+.ath-bundle__price{ font-family:'Russo One',sans-serif; font-size:30px; }
+.ath-bundle__was{ font-size:13px; color:var(--ath-muted); text-decoration:line-through; margin-top:4px; }
+.ath-bundle__radio{ width:20px; height:20px; border-radius:50%; border:2px solid var(--ath-line); margin:16px auto 0; position:relative; }
+.ath-bundle.sel .ath-bundle__radio{ border-color:var(--ath-orange,#F5A524); }
+.ath-bundle.sel .ath-bundle__radio::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--ath-grad); }
+.ath-buy-cta{ max-width:900px; margin:26px auto 0; display:flex; flex-direction:column; align-items:center; gap:12px; }
+.ath-buy-cta .ath-btn{ width:100%; max-width:460px; padding:20px; font-size:15px; }
+.ath-guarantee{ font-size:12px; color:var(--ath-muted); }
+.ath-disc-sec{ background:var(--ath-surface); border-top:1px solid var(--ath-line); }
+.ath-disc-sec p{ color:var(--ath-muted); font-size:13px; max-width:80ch; margin:0 auto; text-align:center; padding:40px 0; line-height:1.7; }
+@media (max-width:900px){ .ath-hero__grid{ grid-template-columns:1fr; gap:24px; } .ath-facts__grid{ grid-template-columns:1fr; gap:28px; } }
+@media (max-width:760px){ .ath-bundles{ grid-template-columns:1fr; } }
+@media (max-width:640px){ .ath-cmp{ grid-template-columns:1fr; } }
+@media (prefers-reduced-motion:reduce){ .ath-btn:hover,.ath-bundle:hover{ transform:none; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Athlesio Product Landing",
+  "tag": "section",
+  "class": "athlesio-section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Produkt (für Warenkorb-Button)" },
+    { "type": "image_picker", "id": "product_image", "label": "Produktbild (optional, sonst Featured Image)" },
+    { "type": "header", "content": "Marke / Farben" },
+    { "type": "color", "id": "color_magenta", "label": "Verlauf Start (Magenta)", "default": "#E11D74" },
+    { "type": "color", "id": "color_orange", "label": "Verlauf Ende (Orange)", "default": "#F5A524" },
+    { "type": "text", "id": "announcement", "label": "Ankündigungsleiste", "default": "Versand aus EU-Lager · 2–5 Werktage DE & AT · 30 Tage Rückgabe" },
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Kreatin-Monohydrat · Gummies" },
+    { "type": "text", "id": "rating_text", "label": "Rating-Text", "default": "4,8 / 5 · 1.240+ zufriedene Kund:innen" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Kreatin, das du kauen kannst." },
+    { "type": "textarea", "id": "subline", "label": "Subline", "default": "5.000 mg Kreatin-Monohydrat pro Portion – im Beeren-Gummi. Kein Shaker, kein Pulver, kein Klumpen. Einfach 3 Gummies am Tag." },
+    { "type": "text", "id": "dose_number", "label": "Dosis-Zahl", "default": "5.000 mg" },
+    { "type": "text", "id": "dose_label", "label": "Dosis-Label", "default": "Kreatin / Portion · 120 Gummies / Dose" },
+    { "type": "text", "id": "cta_label", "label": "CTA-Text", "default": "Jetzt sichern" },
+    { "type": "text", "id": "cta_secondary", "label": "Zweiter CTA", "default": "Warum Gummies?" },
+    { "type": "text", "id": "hero_badges", "label": "Hero-Badges (Komma-getrennt)", "default": "Zuckerfrei, Vegan, Non-GMO, Glutenfrei" },
+    { "type": "header", "content": "Trust-Leiste" },
+    { "type": "text", "id": "trust_badges", "label": "Trust-Badges (Komma-getrennt)", "default": "Laborgeprüft, Vegan & Non-GMO, Zuckerfrei, Glutenfrei, Versand DE & AT" },
+    { "type": "header", "content": "Vergleich (Gummies vs. Pulver)" },
+    { "type": "text", "id": "cmp_eyebrow", "label": "Eyebrow", "default": "Gummies vs. Pulver" },
+    { "type": "text", "id": "cmp_title", "label": "Titel", "default": "Schluss mit Pulver-Chaos" },
+    { "type": "textarea", "id": "cmp_text", "label": "Text", "default": "Kreatin ist eines der am besten untersuchten Supplements – nur will niemand jeden Tag Pulver abwiegen." },
+    { "type": "text", "id": "cmp_a_title", "label": "Spalte A Titel", "default": "Athlesio Gummies" },
+    { "type": "textarea", "id": "cmp_a_items", "label": "Spalte A (eine Zeile pro Punkt)", "default": "5.000 mg fix pro Portion – nichts abwiegen\nEinfach kauen – kein Shaker\nBeerengeschmack, zuckerfrei\nPasst in jede Tasche" },
+    { "type": "text", "id": "cmp_b_title", "label": "Spalte B Titel", "default": "Klassisches Pulver" },
+    { "type": "textarea", "id": "cmp_b_items", "label": "Spalte B (eine Zeile pro Punkt)", "default": "Jede Portion abwiegen\nShaker, anrühren, spülen\nOft kreidiger Geschmack\nUnterwegs unpraktisch" },
+    { "type": "header", "content": "Dosis / Nährwerte" },
+    { "type": "text", "id": "facts_eyebrow", "label": "Eyebrow", "default": "Dosis-Transparenz" },
+    { "type": "text", "id": "facts_number", "label": "Große Zahl", "default": "5.000" },
+    { "type": "text", "id": "facts_sub", "label": "Untertitel", "default": "mg Kreatin pro Portion (3 Gummies)" },
+    { "type": "text", "id": "facts_table_title", "label": "Tabellen-Titel", "default": "Nährwerte pro Portion" },
+    { "type": "textarea", "id": "facts_rows", "label": "Zeilen (Format: Label | Wert, eine pro Zeile)", "default": "Portionsgröße | 3 Gummies\nPortionen / Dose | 40 (120 Stück)\nKreatin-Monohydrat | 5.000 mg\nL-Carnitin | 1.000 mg\nBCAA 2:1:1 | 1.000 mg\nTaurin | 1.000 mg\nVitamin B6 | 5 mg (357 % NRV)\nVitamin B12 | 50 µg (2.000 % NRV)" },
+    { "type": "text", "id": "facts_note", "label": "Notiz", "default": "Zuckerfrei · Vegan · Non-GMO · Glutenfrei. Zutaten & Allergene siehe Etikett." },
+    { "type": "header", "content": "Preise / Bundles" },
+    { "type": "text", "id": "price_eyebrow", "label": "Eyebrow", "default": "Dein Vorrat" },
+    { "type": "text", "id": "price_title", "label": "Titel", "default": "Wähle dein Paket" },
+    { "type": "textarea", "id": "price_text", "label": "Text", "default": "Kreatin wirkt bei täglicher Einnahme – mit dem Mehrfach-Vorrat sparst du und bleibst dran." },
+    { "type": "text", "id": "guarantee_text", "label": "Garantie-Text", "default": "30 Tage Rückgaberecht · Versand 2–5 Werktage DE & AT" },
+    { "type": "text", "id": "bundle_1_label", "label": "B1 Label", "default": "1 Dose" },
+    { "type": "text", "id": "bundle_1_unit", "label": "B1 Einheit", "default": "29,95 € / Dose" },
+    { "type": "text", "id": "bundle_1_price", "label": "B1 Preis", "default": "29,95 €" },
+    { "type": "text", "id": "bundle_1_was", "label": "B1 Streichpreis", "default": "39,95 €" },
+    { "type": "number", "id": "bundle_1_qty", "label": "B1 Menge", "default": 1 },
+    { "type": "text", "id": "bundle_1_tag", "label": "B1 Badge", "default": "" },
+    { "type": "checkbox", "id": "bundle_1_best", "label": "B1 hervorheben", "default": false },
+    { "type": "text", "id": "bundle_2_label", "label": "B2 Label", "default": "2 Dosen" },
+    { "type": "text", "id": "bundle_2_unit", "label": "B2 Einheit", "default": "27,48 € / Dose" },
+    { "type": "text", "id": "bundle_2_price", "label": "B2 Preis", "default": "54,95 €" },
+    { "type": "text", "id": "bundle_2_was", "label": "B2 Streichpreis", "default": "79,90 €" },
+    { "type": "number", "id": "bundle_2_qty", "label": "B2 Menge", "default": 2 },
+    { "type": "text", "id": "bundle_2_tag", "label": "B2 Badge", "default": "Beliebt" },
+    { "type": "checkbox", "id": "bundle_2_best", "label": "B2 hervorheben", "default": true },
+    { "type": "text", "id": "bundle_3_label", "label": "B3 Label", "default": "3 Dosen" },
+    { "type": "text", "id": "bundle_3_unit", "label": "B3 Einheit", "default": "24,98 € / Dose" },
+    { "type": "text", "id": "bundle_3_price", "label": "B3 Preis", "default": "74,95 €" },
+    { "type": "text", "id": "bundle_3_was", "label": "B3 Streichpreis", "default": "119,85 €" },
+    { "type": "number", "id": "bundle_3_qty", "label": "B3 Menge", "default": 3 },
+    { "type": "text", "id": "bundle_3_tag", "label": "B3 Badge", "default": "Beste Wahl · Kur" },
+    { "type": "checkbox", "id": "bundle_3_best", "label": "B3 hervorheben", "default": false },
+    { "type": "header", "content": "Disclaimer" },
+    { "type": "textarea", "id": "disclaimer", "label": "Pflicht-Disclaimer", "default": "Nahrungsergänzungsmittel sind kein Ersatz für eine ausgewogene, abwechslungsreiche Ernährung und eine gesunde Lebensweise. Die empfohlene tägliche Verzehrmenge (3 Gummies) nicht überschreiten. Außerhalb der Reichweite von kleinen Kindern aufbewahren. Für Erwachsene. Die positive Wirkung von Kreatin stellt sich bei einer täglichen Aufnahme von 3 g ein, für Erwachsene mit intensiver körperlicher Betätigung." }
+  ],
+  "presets": [{ "name": "Athlesio Product Landing" }]
+}
+{% endschema %}
