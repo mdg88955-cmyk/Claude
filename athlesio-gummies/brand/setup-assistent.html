@@ -1,0 +1,207 @@
+<title>Athlesio — Shopify Setup-Assistent</title>
+<meta name="description" content="Geführte Klick-für-Klick-Checkliste zum Aufbau des Athlesio Muscle Boost Gummies Shopify-Shops, mit Copy-Buttons für alle Inhalte.">
+<style>
+  :root{
+    color-scheme: dark;
+    --ink:#0E0E11; --surface:#17171C; --surface-2:#201F27; --bone:#F4F1F4; --muted:#9A97A3;
+    --magenta:#E11D74; --orange:#F5A524; --line:rgba(244,241,244,.10);
+    --grad:linear-gradient(100deg,#E11D74,#F5A524); --grad-soft:linear-gradient(100deg,rgba(225,29,116,.14),rgba(245,165,36,.14));
+    --disp:800 1em/1 'Arial Black','Segoe UI',system-ui,sans-serif;
+    --body:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;
+    --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--ink);color:var(--bone);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 clamp(16px,4vw,40px);}
+  a{color:var(--orange);}
+  .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header.top{border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(225,29,116,.08),transparent);}
+  .top .wrap{padding-top:34px;padding-bottom:30px;}
+  .brand{font:var(--disp);font-size:30px;letter-spacing:.02em;}
+  .brand small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-top:2px;font-weight:400;}
+  h1{font:var(--disp);font-size:clamp(26px,4.5vw,40px);text-transform:uppercase;margin:18px 0 8px;letter-spacing:-.01em;}
+  .lede{color:var(--muted);max-width:60ch;margin:0;}
+  .bar{height:8px;background:var(--surface-2);border-radius:20px;overflow:hidden;margin:22px 0 6px;}
+  .bar>i{display:block;height:100%;width:0;background:var(--grad);transition:width .4s ease;}
+  .barlab{font-family:var(--mono);font-size:12px;color:var(--muted);}
+  .phase{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:18px 0;overflow:hidden;}
+  .phase>summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;gap:14px;}
+  .phase>summary::-webkit-details-marker{display:none;}
+  .phase__n{font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--grad);padding:4px 10px;border-radius:20px;font-weight:700;white-space:nowrap;}
+  .phase__t{font:var(--disp);font-size:19px;text-transform:uppercase;letter-spacing:-.01em;flex:1;}
+  .phase__meta{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
+  .phase>summary::after{content:"▸";color:var(--orange);font-size:16px;transition:transform .2s;}
+  .phase[open]>summary::after{transform:rotate(90deg);}
+  .phase__body{padding:0 22px 22px;border-top:1px solid var(--line);}
+  ol.steps{list-style:none;counter-reset:s;margin:18px 0 0;padding:0;}
+  ol.steps>li{counter-increment:s;position:relative;padding:0 0 8px 40px;margin-bottom:14px;}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-2px;width:26px;height:26px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);font-family:var(--mono);font-size:12px;display:flex;align-items:center;justify-content:center;color:var(--orange);}
+  .check{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--surface-2);border-radius:8px;margin-top:14px;cursor:pointer;user-select:none;}
+  .check input{margin-top:3px;width:18px;height:18px;accent-color:var(--orange);flex:none;}
+  .check span{font-size:14.5px;}
+  code.k{font-family:var(--mono);font-size:.9em;background:var(--surface-2);padding:2px 6px;border-radius:4px;color:var(--orange);}
+  .tip{border-left:3px solid var(--orange);padding:8px 0 8px 14px;margin:14px 0;color:var(--muted);font-size:14px;}
+  .warn{border-left:3px solid var(--magenta);padding:10px 0 10px 14px;margin:14px 0;color:#e7b9cf;font-size:14px;}
+  .copyblock{border:1px solid var(--line);border-radius:8px;margin:14px 0;overflow:hidden;}
+  .copyblock__h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;background:var(--surface-2);}
+  .copyblock__h b{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  .copybtn{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;border:0;cursor:pointer;background:var(--grad);color:#fff;padding:8px 14px;border-radius:6px;transition:filter .15s;}
+  .copybtn:hover{filter:brightness(1.1);}
+  .copybtn.done{background:var(--surface);color:var(--orange);box-shadow:inset 0 0 0 1px var(--orange);}
+  .copyblock pre{margin:0;padding:14px;max-height:280px;overflow:auto;font-family:var(--mono);font-size:12.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word;color:#d7d4dc;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:600px){.grid2{grid-template-columns:1fr;}}
+  .pill{display:inline-block;font-family:var(--mono);font-size:11px;background:var(--surface-2);border:1px solid var(--line);padding:3px 9px;border-radius:20px;margin:3px 4px 3px 0;color:var(--muted);}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+  footer{border-top:1px solid var(--line);margin-top:30px;}
+  footer .wrap{padding:24px 0 60px;color:var(--muted);font-family:var(--mono);font-size:12px;}
+  .reset{background:none;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:11px;padding:6px 12px;border-radius:6px;cursor:pointer;}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand grad">Athlesio<small>Shopify Setup-Assistent</small></div>
+    <h1>Dein Shop, <span class="grad">Schritt für Schritt</span></h1>
+    <p class="lede">Arbeite die Phasen von oben nach unten ab. Häkchen werden in deinem Browser gespeichert — du kannst jederzeit pausieren. Blaue Buttons kopieren fertige Inhalte direkt in die Zwischenablage.</p>
+    <div class="bar"><i id="barfill"></i></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <span class="barlab"><span id="barnum">0</span> / <span id="bartot">0</span> erledigt</span>
+      <button class="reset" onclick="resetAll()">Zurücksetzen</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="app">
+
+  <div class="warn" style="margin-top:22px;">
+    <b>Bevor du startest:</b> Ändere die im Chat geteilten Passwörter (Gmail, Shopify, Zendrop) — je Dienst ein eigenes + 2-Faktor-Authentifizierung. Und: Alle Health-Claim-Texte vor dem Live-Gang anwaltlich prüfen lassen (Nahrungsergänzung ist in DE/AT streng reguliert).
+  </div>
+
+  <!-- PHASE 1 -->
+  <details class="phase" open>
+    <summary><span class="phase__n">Phase 1</span><span class="phase__t">Store & Theme</span><span class="phase__meta">~10 Min</span></summary>
+    <div class="phase__body">
+      <ol class="steps">
+        <li>Store-Grundeinstellungen: <b>Einstellungen → Allgemein</b> → Sitz <b>Österreich</b>, Währung <b>EUR</b>.</li>
+        <li><b>Einstellungen → Märkte</b> → Verkauf auf <b>Deutschland + Österreich</b> begrenzen.</li>
+        <li><b>Einstellungen → Steuern</b> → Shopify Tax für DE (19 %) & AT (20 %) aktivieren.</li>
+        <li><b>Online-Store → Themes</b> → Theme <b>„Dawn"</b> hinzufügen (kostenlos) → <b>Anpassen</b>.</li>
+        <li>Im Customizer: <b>Theme-Einstellungen → Farben</b>. Setze diese Werte:</li>
+      </ol>
+      <div class="grid2">
+        <div class="copyblock"><div class="copyblock__h"><b>Hintergrund</b><button class="copybtn" data-copy="#0E0E11">Kopieren</button></div><pre>#0E0E11</pre></div>
+        <div class="copyblock"><div class="copyblock__h"><b>Text</b><button class="copybtn" data-copy="#F4F1F4">Kopieren</button></div><pre>#F4F1F4</pre></div>
+        <div class="copyblock"><div class="copyblock__h"><b>Akzent / Verlauf-Start</b><button class="copybtn" data-copy="#E11D74">Kopieren</button></div><pre>#E11D74</pre></div>
+        <div class="copyblock"><div class="copyblock__h"><b>Akzent / Verlauf-Ende</b><button class="copybtn" data-copy="#F5A524">Kopieren</button></div><pre>#F5A524</pre></div>
+      </div>
+      <div class="tip">Typografie: Headings kräftig (z. B. „Russo One"-artig), Body eine klare Grotesk. Logo & Favicon (dein Tiger) unter <b>Theme-Einstellungen → Logo</b> hochladen.</div>
+      <label class="check"><input type="checkbox" data-k="p1"><span>Store steht, Dawn installiert, Marken-Farben & Logo gesetzt.</span></label>
+    </div>
+  </details>
+
+  <!-- PHASE 2 -->
+  <details class="phase">
+    <summary><span class="phase__n">Phase 2</span><span class="phase__t">Produkt anlegen</span><span class="phase__meta">~10 Min</span></summary>
+    <div class="phase__body">
+      <ol class="steps">
+        <li><b>Produkte → Produkt hinzufügen</b>.</li>
+        <li><b>Titel</b> einfügen:</li>
+      </ol>
+      <div class="copyblock"><div class="copyblock__h"><b>Produkttitel</b><button class="copybtn" data-copy="Athlesio Muscle Boost Gummies – Kreatin Monohydrat, 120 Stück">Kopieren</button></div><pre>Athlesio Muscle Boost Gummies – Kreatin Monohydrat, 120 Stück</pre></div>
+      <ol class="steps" start="3"><li><b>Beschreibung</b>: im Editor auf <code class="k">&lt;/&gt;</code> (HTML anzeigen) klicken und einfügen:</li></ol>
+      <div class="copyblock"><div class="copyblock__h"><b>Beschreibung (HTML)</b><button class="copybtn" data-copy="&lt;h3&gt;Schluss mit Pulver-Chaos.&lt;/h3&gt;&#10;&lt;p&gt;Kreatin gehört zu den am besten untersuchten Supplements im Kraftsport – aber Pulver abwiegen, anrühren, Klümpchen runterwürgen? Muss nicht sein. Die &lt;strong&gt;Athlesio Muscle Boost Gummies&lt;/strong&gt; liefern &lt;strong&gt;5.000 mg Kreatin-Monohydrat pro Portion&lt;/strong&gt; (3 Gummies) in einem Beeren-Gummi, den du einfach kaust. Überall, ohne Shaker.&lt;/p&gt;&#10;&lt;h4&gt;Voll dosiert – und transparent.&lt;/h4&gt;&#10;&lt;p&gt;Viele Gummies sparen beim Wirkstoff. Wir nicht: 5.000 mg Kreatin pro Portion, plus ein Komplex aus L-Carnitin, BCAA 2:1:1, Taurin sowie Vitamin B6 und B12.&lt;/p&gt;&#10;&lt;p&gt;&lt;strong&gt;Kreatin erhöht die körperliche Leistung bei Schnellkrafttraining&lt;/strong&gt; im Rahmen kurzzeitiger intensiver körperlicher Betätigung. Die positive Wirkung stellt sich bei einer täglichen Aufnahme von 3 g Kreatin ein – unsere Portion liefert 5 g. (Für Erwachsene, die intensiver körperlicher Betätigung nachgehen.)&lt;/p&gt;&#10;&lt;p&gt;&lt;strong&gt;Vitamin B6 &amp; B12&lt;/strong&gt; tragen zu einem normalen Energiestoffwechsel und zur Verringerung von Müdigkeit und Ermüdung bei.&lt;/p&gt;&#10;&lt;ul&gt;&lt;li&gt;5.000 mg Kreatin-Monohydrat pro Portion – voll dosiert&lt;/li&gt;&lt;li&gt;Zuckerfrei · Vegan · Non-GMO · Glutenfrei&lt;/li&gt;&lt;li&gt;Beerengeschmack (Himbeere, Brombeere, Blaubeere)&lt;/li&gt;&lt;li&gt;Kein Shaker, kein Pulver – einfach kauen&lt;/li&gt;&lt;li&gt;Versand aus EU-Lager · 2–5 Werktage DE &amp; AT&lt;/li&gt;&lt;/ul&gt;&#10;&lt;p&gt;&lt;strong&gt;Verzehrempfehlung:&lt;/strong&gt; 3 Gummies täglich. Nicht mehr als die empfohlene Tagesmenge verzehren.&lt;/p&gt;&#10;&lt;p&gt;&lt;em&gt;Nahrungsergänzungsmittel sind kein Ersatz für eine ausgewogene, abwechslungsreiche Ernährung und eine gesunde Lebensweise. Außerhalb der Reichweite von kleinen Kindern aufbewahren. Für Erwachsene.&lt;/em&gt;&lt;/p&gt;">Kopieren</button></div><pre>&lt;h3&gt;Schluss mit Pulver-Chaos.&lt;/h3&gt;
+&lt;p&gt;… 5.000 mg Kreatin-Monohydrat pro Portion … (voller Text im Button)&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Zuckerfrei · Vegan · Non-GMO · Glutenfrei&lt;/li&gt; …&lt;/ul&gt;</pre></div>
+      <ol class="steps" start="4">
+        <li><b>Bilder</b> hochladen: die 5 Produktbilder (Dose-Front zuerst, dann Lifestyle, Supplement Facts, Ingredients).</li>
+        <li><b>Preis</b>: <code class="k">29,95 €</code>, Vergleichspreis <code class="k">39,95 €</code>. Grundpreis (je 100 g) hinterlegen — Pflicht.</li>
+        <li>Ganz unten <b>Suchmaschineneintrag → Bearbeiten</b>:</li>
+      </ol>
+      <div class="copyblock"><div class="copyblock__h"><b>SEO-Titel</b><button class="copybtn" data-copy="Kreatin Gummies – Athlesio Muscle Boost | 5.000 mg pro Portion">Kopieren</button></div><pre>Kreatin Gummies – Athlesio Muscle Boost | 5.000 mg pro Portion</pre></div>
+      <div class="copyblock"><div class="copyblock__h"><b>Meta-Beschreibung</b><button class="copybtn" data-copy="Kreatin-Monohydrat-Gummies mit 5.000 mg pro Portion. Zuckerfrei, vegan, Beerengeschmack. Kein Shaker, kein Pulver – einfach kauen. Versand DE & AT.">Kopieren</button></div><pre>Kreatin-Monohydrat-Gummies mit 5.000 mg pro Portion. Zuckerfrei, vegan, Beerengeschmack. Kein Shaker, kein Pulver – einfach kauen. Versand DE &amp; AT.</pre></div>
+      <div class="warn">Pflicht: Nährwerttabelle, vollständige Zutatenliste, Allergene, verantwortlicher Unternehmer (Name/Anschrift) & Disclaimer aufs Produkt/Etikett. Werte stehen in der Produktcopy-Datei im Repo.</div>
+      <label class="check"><input type="checkbox" data-k="p2"><span>Produkt mit Titel, Beschreibung, Bildern, Preis & SEO angelegt.</span></label>
+    </div>
+  </details>
+
+  <!-- PHASE 3 -->
+  <details class="phase">
+    <summary><span class="phase__n">Phase 3</span><span class="phase__t">Die Athlesio-Section einbauen</span><span class="phase__meta">~8 Min</span></summary>
+    <div class="phase__body">
+      <ol class="steps">
+        <li><b>Online-Store → Themes → … → Code bearbeiten</b>.</li>
+        <li>Unter <b>Sections</b> → <b>Neue Section hinzufügen</b> → Name <code class="k">athlesio-product-landing</code>.</li>
+        <li>Den kompletten Inhalt der Datei <code class="k">shopify/sections/athlesio-product-landing.liquid</code> aus deinem GitHub-Repo (Branch <code class="k">claude/athlesio-shopify-shop-a5s8yr</code>) einfügen → <b>Speichern</b>.</li>
+        <li>Zurück zu <b>Anpassen</b> → auf der Startseite/Produktseite <b>Section hinzufügen → „Athlesio Product Landing"</b>.</li>
+        <li>In den Section-Einstellungen: <b>Produkt = deine Muscle Boost Gummies</b> auswählen (aktiviert den Warenkorb-Button). Farben & Bundles sind schon vorausgefüllt.</li>
+        <li>Optional als <b>Startseite</b> setzen.</li>
+      </ol>
+      <div class="tip">Die Section ist voll editierbar (Texte, Farben, Bundle-Preise) — nichts davon musst du im Code ändern.</div>
+      <label class="check"><input type="checkbox" data-k="p3"><span>Section im Theme angelegt, Produkt verknüpft, sichtbar auf der Seite.</span></label>
+    </div>
+  </details>
+
+  <!-- PHASE 4 -->
+  <details class="phase">
+    <summary><span class="phase__n">Phase 4</span><span class="phase__t">Bundle-Rabatte & Seiten</span><span class="phase__meta">~10 Min</span></summary>
+    <div class="phase__body">
+      <ol class="steps">
+        <li><b>Rabatte → Rabatt erstellen → Automatischer Rabatt</b>: „Kauf 2 → günstiger", „Kauf 3 → günstiger", passend zu den Bundle-Preisen (2 Dosen 54,95 €, 3 Dosen 74,95 €).</li>
+        <li><b>Online-Store → Seiten → Seite hinzufügen</b> für: Versand & Lieferzeit, Kontakt, Impressum, AGB, Widerruf, Datenschutz.</li>
+      </ol>
+      <div class="copyblock"><div class="copyblock__h"><b>Seite „Versand & Lieferzeit"</b><button class="copybtn" data-copy="Wir liefern nach Deutschland und Österreich. Versand aus einem EU-Lager, Lieferzeit 2–5 Werktage, mit Tracking-Nummer per E-Mail. 30 Tage Rückgaberecht auf ungeöffnete Dosen. Versandkosten: [Betrag] € bzw. kostenlos ab [Schwelle] € — final festlegen, sobald der Zendrop-Versand steht.">Kopieren</button></div><pre>Wir liefern nach Deutschland und Österreich. Versand aus einem EU-Lager, Lieferzeit 2–5 Werktage, mit Tracking … 30 Tage Rückgaberecht …</pre></div>
+      <div class="copyblock"><div class="copyblock__h"><b>Seite „Kontakt"</b><button class="copybtn" data-copy="Fragen zu Bestellung, Versand oder Produkt? Schreib uns an support@athlesio.at – wir antworten in der Regel innerhalb von 24 Stunden (Mo–Fr). Athlesio, athlesio.at.">Kopieren</button></div><pre>Fragen zu Bestellung, Versand oder Produkt? support@athlesio.at – Antwort i. d. R. binnen 24 h (Mo–Fr).</pre></div>
+      <div class="warn">Impressum, AGB, Widerruf & Datenschutz sind Pflicht in DE/AT. Shopify-Rechtstext-Generator als Start nutzen, dann anwaltlich prüfen lassen. Firmendaten (Anschrift, ggf. Firmenbuch-/USt-Nr.) einsetzen.</div>
+      <label class="check"><input type="checkbox" data-k="p4"><span>Bundle-Rabatte & Pflichtseiten angelegt.</span></label>
+    </div>
+  </details>
+
+  <!-- PHASE 5 -->
+  <details class="phase">
+    <summary><span class="phase__n">Phase 5</span><span class="phase__t">Zendrop, Domain & Launch</span><span class="phase__meta">~15 Min</span></summary>
+    <div class="phase__body">
+      <ol class="steps">
+        <li><b>Shopify App Store → Zendrop</b> installieren, per OAuth verbinden (kein Passwort an Dritte).</li>
+        <li>In Zendrop die Kreatin-Gummies suchen/importieren — bevorzugt aus <b>EU-Lager</b>, damit 2–5 Werktage halten. Mit deinem Shopify-Produkt (SKU/Variante) mappen.</li>
+        <li><b>Muster bestellen</b>: echte Lieferzeit nach DE & AT stoppen, Qualität + DE-Pflichtangaben auf dem Etikett prüfen — <b>vor</b> dem Ads-Start.</li>
+        <li><b>Einstellungen → Domains → Domain verbinden</b> → <code class="k">athlesio.at</code>. Die angezeigten DNS-Einträge (A-Record + CNAME) im Hostinger-Panel eintragen. SSL kommt automatisch.</li>
+        <li>Cookie-Consent-Banner (DSGVO/TTDSG) aktivieren, dann TikTok-Pixel einbinden.</li>
+        <li><b>Testbestellung</b> durchführen (Zahlung, Bestätigungsmail, Zendrop-Weiterleitung), dann live gehen.</li>
+      </ol>
+      <div class="pill">Hooks & Content-Angles</div><div class="pill">docs/markt-tiktok-recherche.md</div>
+      <label class="check"><input type="checkbox" data-k="p5"><span>Zendrop verbunden, Muster geprüft, Domain live, Testbestellung erfolgreich.</span></label>
+    </div>
+  </details>
+
+</main>
+
+<footer><div class="wrap">Athlesio Setup-Assistent · Fortschritt wird nur lokal in deinem Browser gespeichert · athlesio.at</div></footer>
+
+<script>
+  var KEY='athlesio_setup_v1';
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; } }
+  function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
+  var state=load();
+  var boxes=[].slice.call(document.querySelectorAll('.check input'));
+  document.getElementById('bartot').textContent=boxes.length;
+  function refresh(){
+    var n=boxes.filter(function(b){return b.checked;}).length;
+    document.getElementById('barnum').textContent=n;
+    document.getElementById('barfill').style.width=(boxes.length?(n/boxes.length*100):0)+'%';
+  }
+  boxes.forEach(function(b){
+    var k=b.dataset.k; b.checked=!!state[k];
+    b.addEventListener('change',function(){ state[k]=b.checked; save(state); refresh(); });
+  });
+  refresh();
+  function resetAll(){ state={}; save(state); boxes.forEach(function(b){b.checked=false;}); refresh(); }
+  document.querySelectorAll('.copybtn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var txt=btn.getAttribute('data-copy');
+      var done=function(){ var o=btn.textContent; btn.textContent='✓ Kopiert'; btn.classList.add('done'); setTimeout(function(){ btn.textContent=o; btn.classList.remove('done'); },1600); };
+      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done).catch(function(){fallback(txt,done);}); }
+      else{ fallback(txt,done); }
+    });
+  });
+  function fallback(txt,done){ var t=document.createElement('textarea'); t.value=txt; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.select(); try{document.execCommand('copy');done();}catch(e){} document.body.removeChild(t); }
+</script>
