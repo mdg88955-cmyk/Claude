@@ -20,6 +20,13 @@ nur via Shopify-Staff-Einladung oder Admin-API-Token geben — nie per Passwort.
 | `brand/design-direction.md` | Farb-/Typo-Token, Signature-Element, Motion (aus frontend-design + ui-ux-pro-max) |
 | `brand/shop-prototype.html` | Gerenderter, interaktiver Shop-Prototyp (Artifact) zum Ansehen |
 | `shopify/sections/athlesio-product-landing.liquid` | **Einbaufertige Shopify-Section** mit Customizer-Einstellungen + echtem Warenkorb |
+| `shopify/muscle-boost-gummies.csv` | **Import-fertige Produkt-CSV** (1/2/3-Dosen-Bundles als Varianten) |
+| `shopify/PRODUKT-IMPORT.md` | Anleitung zum CSV-Produktimport + Zendrop-Fulfillment-Hinweis |
+| `shopify-theme/` | Rechtstexte-Sections + Page-Templates für dein hochgeladenes Theme |
+| `docs/theme-import-anleitung.md` | Theme-Zip importieren + Rechtsseiten aktivieren |
+| `content/tiktok-content-paket.md` | 5 abdrehbare TikTok-Skripte, Ad-Captions, Hashtags, 2-Wochen-Plan |
+| `content/email-flows.md` | Willkommens-, Warenkorbabbruch- & Post-Purchase-E-Mails (Deutsch) |
+| `athlesio-theme-shopify.zip` | Fertige, importierbare Theme-Zip (per Chat gesendet; nicht im Git) |
 | `design-system/athlesio-muscle-boost/MASTER.md` | Persistiertes Design-System (ui-ux-pro-max) |
 
 ## Produkt in Kürze
