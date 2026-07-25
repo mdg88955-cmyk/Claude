@@ -1,0 +1,37 @@
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div>
+      <div class="site-header__logo" style="margin-bottom:12px;">
+        {% if section.settings.logo %}
+          <img src="{{ section.settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" style="height:32px;">
+        {% else %}
+          <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" style="height:32px;">
+        {% endif %}
+      </div>
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Alle Rechte vorbehalten.</p>
+    </div>
+    <nav class="site-footer__links">
+      {% if linklists.footer.links.size > 0 %}
+        {% for link in linklists.footer.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      {% else %}
+        {%- comment -%} Fallback: funktioniert sofort. Für eigene Reihenfolge im Admin ein "footer"-Menü anlegen. {%- endcomment -%}
+        <a href="/pages/kontakt">Kontakt</a>
+        <a href="/pages/versand">Versand &amp; Zahlung</a>
+        <a href="/pages/widerruf">Widerruf</a>
+        <a href="/pages/agb">AGB</a>
+        <a href="/pages/datenschutz">Datenschutz</a>
+        <a href="/pages/impressum">Impressum</a>
+      {% endif %}
+    </nav>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (leer lassen, um das Athlesio-Standardlogo zu verwenden)" }
+  ]
+}
+{% endschema %}

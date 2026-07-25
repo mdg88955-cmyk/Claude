@@ -1,0 +1,24 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Athlesio",
+    "theme_version": "1.1.0",
+    "theme_author": "Athlesio by Davide Martino",
+    "theme_documentation_url": "https://athlesio.at",
+    "theme_support_url": "https://athlesio.at"
+  },
+  {
+    "name": "Farben",
+    "settings": [
+      { "type": "color", "id": "color_bg", "label": "Hintergrund", "default": "#0A0A0A" },
+      { "type": "color", "id": "color_text", "label": "Text", "default": "#F2F2F2" },
+      { "type": "color", "id": "color_gold", "label": "Akzent (Gold)", "default": "#D4AF37" }
+    ]
+  },
+  {
+    "name": "Typografie",
+    "settings": [
+      { "type": "font_picker", "id": "font_body", "label": "Schriftart", "default": "helvetica_n4" }
+    ]
+  }
+]
