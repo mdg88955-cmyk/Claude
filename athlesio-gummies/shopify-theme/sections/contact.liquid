@@ -5,7 +5,7 @@
     <p>{{ section.settings.intro | default: 'Fragen zu deiner Bestellung, zum Versand oder zum Produkt? Schreib uns – wir antworten in der Regel innerhalb von 24 Stunden (Mo–Fr).' }}</p>
 
     <p class="contact__meta">
-      E-Mail: <a href="mailto:{{ section.settings.email | default: 'support@athlesio.at' }}">{{ section.settings.email | default: 'support@athlesio.at' }}</a><br>
+      E-Mail: <a href="mailto:{{ section.settings.email | default: 'info@athlesio.at' }}">{{ section.settings.email | default: 'info@athlesio.at' }}</a><br>
       {% if section.settings.phone != blank %}Telefon: {{ section.settings.phone }}<br>{% endif %}
       Web: athlesio.at
     </p>
@@ -41,7 +41,7 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Überschrift", "default": "Kontakt" },
     { "type": "textarea", "id": "intro", "label": "Einleitung", "default": "Fragen zu deiner Bestellung, zum Versand oder zum Produkt? Schreib uns – wir antworten in der Regel innerhalb von 24 Stunden (Mo–Fr)." },
-    { "type": "text", "id": "email", "label": "E-Mail", "default": "support@athlesio.at" },
+    { "type": "text", "id": "email", "label": "E-Mail", "default": "info@athlesio.at" },
     { "type": "text", "id": "phone", "label": "Telefon (optional)", "default": "" },
     { "type": "checkbox", "id": "show_form", "label": "Kontaktformular anzeigen", "default": true }
   ]
