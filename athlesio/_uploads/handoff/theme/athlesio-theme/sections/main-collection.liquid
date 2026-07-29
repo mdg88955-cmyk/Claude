@@ -1,0 +1,26 @@
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Collection</span>
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="rte muted" style="margin-bottom:var(--sp-6)">{{ collection.description }}</div>
+    {%- endif -%}
+
+    {%- paginate collection.products by 24 -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="grid">
+          {%- for product in collection.products -%}{% render 'product-card', product: product %}{%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <nav style="margin-top:var(--sp-6);display:flex;gap:var(--sp-3)">
+            {%- if paginate.previous -%}<a class="btn btn--secondary" href="{{ paginate.previous.url }}">Previous</a>{%- endif -%}
+            {%- if paginate.next -%}<a class="btn btn--secondary" href="{{ paginate.next.url }}">Next</a>{%- endif -%}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <p class="muted">Nothing here yet.</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+{% schema %}{ "name": "Collection" }{% endschema %}

@@ -1,0 +1,15 @@
+{
+  "current": {
+    "color_ink": "#14141A",
+    "color_surface": "#1B1B22",
+    "color_line": "#32323D",
+    "color_plum": "#9A5683",
+    "color_gold": "#E3B545",
+    "color_fg": "#F2F0EC",
+    "color_fg_muted": "#A3A0AA",
+    "logo_height": 40,
+    "show_dshea": false,
+    "supplement_disclaimer": "Food supplement. Not a substitute for a varied and balanced diet or a healthy lifestyle. Do not exceed the recommended daily dose. Not suitable for children, or for women who are pregnant or breastfeeding. Keep out of reach of young children.",
+    "dshea_text": "These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease."
+  }
+}

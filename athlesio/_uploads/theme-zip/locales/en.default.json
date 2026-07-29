@@ -1,0 +1,22 @@
+{
+  "general": {
+    "accessibility": { "skip_to_text": "Skip to content" },
+    "search": { "search": "Search" },
+    "404": { "title": "Nothing here", "subtext": "That page does not exist, or it moved." }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "quantity": "Quantity"
+    }
+  },
+  "cart": {
+    "general": { "title": "Cart", "empty": "Your cart is empty", "subtotal": "Subtotal", "checkout": "Checkout", "update": "Update cart" }
+  },
+  "customer": {
+    "login": { "title": "Log in" },
+    "register": { "title": "Create account" },
+    "account": { "title": "Account" }
+  }
+}

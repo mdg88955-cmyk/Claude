@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_ink }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon -%}
+    <link rel="icon" href="{{ settings.favicon | image_url: width: 64 }}">
+  {%- endif -%}
+
+  <title>{{ page_title }}{% if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+
+  {{ content_for_header }}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+
+  <style>
+    :root{
+      --ath-ink:{{ settings.color_ink }};
+      --ath-surface:{{ settings.color_surface }};
+      --ath-line:{{ settings.color_line }};
+      --ath-plum:{{ settings.color_plum }};
+      --ath-gold:{{ settings.color_gold }};
+      --ath-fg:{{ settings.color_fg }};
+      --ath-fg-muted:{{ settings.color_fg_muted }};
+      --ath-gradient:linear-gradient(180deg,{{ settings.color_plum }} 0%,#B77C6A 52%,{{ settings.color_gold }} 100%);
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  {% section 'announcement' %}
+  {% section 'header' %}
+
+  <main id="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  <script src="{{ 'athlesio.js' | asset_url }}" defer></script>
+</body>
+</html>

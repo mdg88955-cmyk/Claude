@@ -1,0 +1,40 @@
+<section class="trustbar">
+  <div class="container">
+    <div class="trustbar__grid">
+      {%- for block in section.blocks -%}
+        <div class="trustbar__item" {{ block.shopify_attributes }}>
+          <strong>{{ block.settings.title }}</strong>
+          {{ block.settings.text }}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust bar",
+      "blocks": [
+        { "type": "item", "settings": { "title": "40 servings per jar", "text": "About six weeks at three gummies a day" } },
+        { "type": "item", "settings": { "title": "Sugar-free, vegan", "text": "No gelatin, no added sugar, non-GMO" } },
+        { "type": "item", "settings": { "title": "Ships from Austria", "text": "EU, UK and US" } },
+        { "type": "item", "settings": { "title": "14-day returns", "text": "Unopened jars, seal intact" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,29 @@
+<section class="section--tight">
+  <div class="container">
+    <div class="honesty" data-reveal>
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h3>{{ section.settings.heading }}</h3>
+      <div class="rte muted">{{ section.settings.body }}</div>
+      {%- if section.settings.link_url != blank -%}
+        <p style="margin-top:var(--sp-4);margin-bottom:0">
+          <a href="{{ section.settings.link_url }}">{{ section.settings.link_text }}</a>
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Honesty note",
+  "settings": [
+    { "type": "paragraph", "content": "Only publish this once you actually hold an independent certificate of analysis. Making the point and then not backing it up is worse than saying nothing." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Worth knowing" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Creatine gummies have a testing problem" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Independent lab testing in 2025 found that a large share of creatine gummies on the market contained far less creatine than their labels claimed. Creatine is chemically less stable in a gummy than in a powder. We think you should know that before you buy from anyone, including us.</p><p>Ask any brand selling creatine gummies for a recent independent certificate of analysis. If they cannot produce one, that tells you something.</p>" },
+    { "type": "text", "id": "link_text", "label": "Link text", "default": "Read our certificate of analysis" },
+    { "type": "url", "id": "link_url", "label": "Link" }
+  ],
+  "presets": [{ "name": "Honesty note" }]
+}
+{% endschema %}

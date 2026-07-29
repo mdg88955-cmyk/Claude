@@ -1,0 +1,38 @@
+<section class="section">
+  <div class="container" style="max-width:840px">
+    <h1>Cart</h1>
+    {%- if cart.item_count == 0 -%}
+      <p class="lead">Your cart is empty.</p>
+      <a class="btn btn--primary" href="{{ routes.all_products_collection_url }}">Browse products</a>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        {%- for item in cart.items -%}
+          <div class="cart-row">
+            <div class="cart-row__img">
+              {%- if item.image -%}<img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" width="88" height="88" loading="lazy">{%- endif -%}
+            </div>
+            <div>
+              <a href="{{ item.url }}" style="color:var(--ath-fg);font-weight:600">{{ item.product.title }}</a>
+              <div class="muted" style="font-size:14px">{{ item.variant.title }}</div>
+              <label class="visually-hidden" for="qty-{{ item.index }}">Quantity</label>
+              <input class="qty" id="qty-{{ item.index }}" type="number" min="0" name="updates[]" value="{{ item.quantity }}" style="margin-top:var(--sp-2)">
+            </div>
+            <div class="mono">{{ item.line_price | money }}</div>
+          </div>
+        {%- endfor -%}
+
+        <div class="cart-total">
+          <span class="muted">Subtotal</span>
+          <strong>{{ cart.total_price | money }}</strong>
+        </div>
+        <p class="muted" style="font-size:13px">Shipping, taxes and any import duties are calculated at checkout.</p>
+
+        <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap">
+          <button type="submit" name="update" class="btn btn--secondary">Update cart</button>
+          <button type="submit" name="checkout" class="btn btn--primary" style="flex:1;min-width:200px">Checkout</button>
+        </div>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}{ "name": "Cart" }{% endschema %}

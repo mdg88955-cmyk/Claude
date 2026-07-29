@@ -1,0 +1,205 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "t1": {
+          "type": "trust",
+          "settings": {
+            "text": "Ships from Austria - EU, UK and US"
+          }
+        },
+        "t2": {
+          "type": "trust",
+          "settings": {
+            "text": "14-day returns on unopened jars with the seal intact"
+          }
+        },
+        "t3": {
+          "type": "trust",
+          "settings": {
+            "text": "Full ingredient breakdown below - no proprietary blends"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ]
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "m1": {
+          "type": "item",
+          "settings": {
+            "text": "Sugar-free"
+          }
+        },
+        "m2": {
+          "type": "item",
+          "settings": {
+            "text": "Vegan - no gelatin"
+          }
+        },
+        "m3": {
+          "type": "item",
+          "settings": {
+            "text": "Non-GMO"
+          }
+        },
+        "m4": {
+          "type": "item",
+          "settings": {
+            "text": "40 servings per jar"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ]
+    },
+    "facts": {
+      "type": "product-facts",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "name": "Creatine monohydrate",
+            "amount": "5,000 mg"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "name": "L-carnitine",
+            "amount": "1,000 mg"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "name": "BCAA 2:1:1 (leucine, isoleucine, valine)",
+            "amount": "1,000 mg"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "name": "Taurine",
+            "amount": "1,000 mg"
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "name": "Vitamin B6",
+            "amount": "5 mg",
+            "nrv": "357%"
+          }
+        },
+        "r6": {
+          "type": "row",
+          "settings": {
+            "name": "Vitamin B12",
+            "amount": "50 mcg",
+            "nrv": "2,000%"
+          }
+        },
+        "r7": {
+          "type": "row",
+          "settings": {
+            "name": "Total active complex",
+            "amount": "8,005 mg"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6",
+        "r7"
+      ]
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Three gummies",
+            "text": "One serving. Chew them, no water needed."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Any time of day",
+            "text": "Timing barely matters. Remembering does."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Give it three to four weeks",
+            "text": "Creatine saturates muscle stores over time."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "honesty": {
+      "type": "honesty"
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "qa",
+          "settings": {
+            "q": "How long until I notice anything?",
+            "a": "Roughly three to four weeks of daily use."
+          }
+        },
+        "q2": {
+          "type": "qa",
+          "settings": {
+            "q": "Do I need a loading phase?",
+            "a": "No."
+          }
+        },
+        "q3": {
+          "type": "qa",
+          "settings": {
+            "q": "Can I take it on rest days?",
+            "a": "Yes - daily consistency is the point."
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "marquee",
+    "facts",
+    "how",
+    "honesty",
+    "faq"
+  ]
+}

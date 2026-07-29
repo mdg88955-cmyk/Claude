@@ -1,0 +1,145 @@
+<section class="section">
+  <div class="container">
+    <div class="product">
+
+      <div class="product__gallery">
+        <div class="product__main-img">
+          {%- if product.featured_media -%}
+            <img data-main-image
+                 src="{{ product.featured_media | image_url: width: 1200 }}"
+                 alt="{{ product.featured_media.alt | escape }}"
+                 width="1200" height="1200" loading="eager" fetchpriority="high">
+          {%- else -%}
+            <span class="muted mono" style="font-size:13px">No image yet</span>
+          {%- endif -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs">
+            {%- for media in product.media -%}
+              <button type="button" class="product__thumb" data-thumb
+                      data-full="{{ media | image_url: width: 1200 }}"
+                      data-alt="{{ media.alt | escape }}"
+                      aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                      aria-label="View image {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 160 }}" alt="" width="72" height="72" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div data-buybox>
+        <span class="eyebrow">{{ product.type | default: 'Food supplement' }}</span>
+        <h1 style="font-size:clamp(30px,4vw,49px)">{{ product.title }}</h1>
+
+        <div class="product__price mono" data-price>{{ product.selected_or_first_available_variant.price | money }}</div>
+        {%- if section.settings.unit_note != blank -%}
+          <div class="product__unit">{{ section.settings.unit_note }}</div>
+        {%- endif -%}
+
+        {%- form 'product', product, data-product-form: true -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          {%- if product.variants.size > 1 -%}
+            {%- assign base = product.variants.first.price -%}
+            <fieldset class="bundles" style="border:0;padding:0;margin:0 0 var(--sp-5)">
+              <legend class="eyebrow" style="padding:0;margin-bottom:var(--sp-3)">Choose your supply</legend>
+
+              {%- for variant in product.variants -%}
+                {%- liquid
+                  assign n = forloop.index
+                  assign full = base | times: n
+                  assign saved = full | minus: variant.price
+                  assign pct = 0
+                  if full > 0 and saved > 0
+                    assign pct = saved | times: 100.0 | divided_by: full | round
+                  endif
+                -%}
+                <label class="bundle"
+                       data-variant
+                       data-variant-id="{{ variant.id }}"
+                       data-variant-price="{{ variant.price | money }}"
+                       data-available="{{ variant.available }}"
+                       data-selected="{% if variant.id == product.selected_or_first_available_variant.id %}true{% else %}false{% endif %}">
+                  <input type="radio" name="variant-choice" value="{{ variant.id }}"
+                         {% if variant.id == product.selected_or_first_available_variant.id %}checked{% endif %}>
+                  <span class="bundle__dot" aria-hidden="true"></span>
+                  <span>
+                    <span class="bundle__label">{{ variant.title }}</span>
+                    <span class="bundle__meta">
+                      {%- if variant.available -%}
+                        {{ variant.price | divided_by: n | money }} per jar
+                      {%- else -%}Sold out{%- endif -%}
+                    </span>
+                  </span>
+                  <span class="bundle__price">
+                    {{ variant.price | money }}
+                    {%- if saved > 0 %}<br><span class="muted" style="font-size:12px"><del>{{ full | money }}</del></span>{% endif -%}
+                  </span>
+                  {%- if pct > 0 -%}<span class="bundle__save">Save {{ pct }}%</span>{%- endif -%}
+                </label>
+              {%- endfor -%}
+            </fieldset>
+          {%- endif -%}
+
+          <button type="submit" name="add" class="btn btn--primary btn--full" data-add data-label="Add to cart"
+                  {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+            {% if product.selected_or_first_available_variant.available %}Add to cart{% else %}Sold out{% endif %}
+          </button>
+        {%- endform -%}
+
+        {%- if section.settings.honest_note != blank -%}
+          <p class="muted" style="font-size:13px;margin-top:var(--sp-3);text-align:center">{{ section.settings.honest_note }}</p>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="trust-strip">
+            {%- for block in section.blocks -%}
+              <div {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="rte" style="margin-top:var(--sp-6)">{{ product.description }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Sticky buy bar: appears once the buy box scrolls out of view. {%- endcomment -%}
+<div class="stickybar" data-stickybar data-show="false">
+  <div class="container stickybar__inner">
+    {%- if product.featured_media -%}
+      <img class="stickybar__img" src="{{ product.featured_media | image_url: width: 120 }}" alt="" width="48" height="48" loading="lazy">
+    {%- endif -%}
+    <div class="stickybar__txt">
+      <div class="stickybar__name">{{ product.title }}</div>
+      <div class="stickybar__price" data-sticky-price>{{ product.selected_or_first_available_variant.price | money }}</div>
+    </div>
+    <button class="btn btn--primary" type="button" data-sticky-add>Add to cart</button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "text", "id": "unit_note", "label": "Note under price", "default": "120 gummies - 40 servings - about six weeks" },
+    { "type": "text", "id": "honest_note", "label": "Note under the button", "default": "Creatine needs three to four weeks of daily use. Two jars is the honest starting point, not an upsell." }
+  ],
+  "blocks": [
+    { "type": "trust", "name": "Trust line", "settings": [{ "type": "text", "id": "text", "label": "Text" }] }
+  ],
+  "presets": [
+    {
+      "name": "Product",
+      "blocks": [
+        { "type": "trust", "settings": { "text": "Ships from Austria - EU, UK and US" } },
+        { "type": "trust", "settings": { "text": "14-day returns on unopened jars with the seal intact" } },
+        { "type": "trust", "settings": { "text": "Full ingredient breakdown below - no proprietary blends" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

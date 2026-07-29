@@ -1,0 +1,39 @@
+<section class="section--tight">
+  <div class="container">
+    <div class="split">
+      <div class="split__media" data-reveal style="order:{% if section.settings.flip %}2{% else %}1{% endif %}">
+        {%- if section.settings.image -%}
+          <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.image.alt | escape }}" width="600" height="600" loading="lazy">
+        {%- else -%}
+          <div style="aspect-ratio:4/3;display:grid;place-items:center">
+            <span class="muted mono" style="font-size:13px">Add an image</span>
+          </div>
+        {%- endif -%}
+      </div>
+      <div data-reveal style="order:{% if section.settings.flip %}1{% else %}2{% endif %}">
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+        <div class="rte muted">{{ section.settings.body }}</div>
+        {%- if section.settings.cta_url != blank -%}
+          <a class="btn btn--primary" href="{{ section.settings.cta_url }}" style="margin-top:var(--sp-3)">{{ section.settings.cta_text }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Split feature",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "checkbox", "id": "flip", "label": "Image on the right", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why gummies" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Powder works. If you take it." },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Creatine only does anything if you take it consistently for weeks. Most people who quit quit over the logistics: the tub, the shaker, the washing up, the remembering.</p><p>Three gummies in your gym bag removes every one of those steps. That is the entire pitch.</p>" },
+    { "type": "text", "id": "cta_text", "label": "Button", "default": "Add to cart" },
+    { "type": "url", "id": "cta_url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Split feature" }]
+}
+{% endschema %}

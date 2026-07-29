@@ -1,0 +1,57 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="header__logo" style="margin-bottom:var(--sp-3)">
+          <span class="grad" style="font-size:28px">{{ shop.name }}</span>
+        </div>
+        {%- if section.settings.blurb != blank -%}
+          <p class="muted" style="font-size:14px;max-width:42ch">{{ section.settings.blurb }}</p>
+        {%- endif -%}
+        <p style="font-size:14px"><a href="mailto:{{ shop.email }}">{{ shop.email }}</a></p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          {%- for link in linklists[section.settings.menu_1].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          {%- for link in linklists[section.settings.menu_2].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+
+    {%- if settings.supplement_disclaimer != blank -%}
+      <p class="footer__disclaimer">{{ settings.supplement_disclaimer }}</p>
+    {%- endif -%}
+
+    {%- if settings.show_dshea -%}
+      <p class="footer__disclaimer">* {{ settings.dshea_text }}</p>
+    {%- endif -%}
+
+    <div class="footer__legal">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <span>{{ powered_by_link }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "textarea", "id": "blurb", "label": "Short description", "default": "Sports nutrition, run small from Austria. Full ingredient breakdowns on every product page." },
+    { "type": "link_list", "id": "menu_1", "label": "Shop menu", "default": "footer" },
+    { "type": "link_list", "id": "menu_2", "label": "Legal menu" }
+  ]
+}
+{% endschema %}

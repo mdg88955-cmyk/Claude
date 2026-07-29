@@ -1,0 +1,18 @@
+<section class="section">
+  <div class="container">
+    <h1>Collections</h1>
+    <div class="grid" style="margin-top:var(--sp-6)">
+      {%- for collection in collections -%}
+        <a class="card" href="{{ collection.url }}">
+          <div class="card__media">
+            {%- if collection.featured_image -%}
+              <img src="{{ collection.featured_image | image_url: width: 600 }}" alt="" width="300" height="300" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="card__body"><h3 class="card__title">{{ collection.title }}</h3></div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}{ "name": "Collections list" }{% endschema %}

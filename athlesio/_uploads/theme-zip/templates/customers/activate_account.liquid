@@ -1,0 +1,14 @@
+<section class="section"><div class="container" style="max-width:420px">
+  <h1>Activate account</h1>
+  {%- form 'activate_customer_password' -%}
+    {{ form.errors | default_errors }}
+    <label for="ap">Password</label>
+    <input class="qty" style="width:100%" type="password" name="customer[password]" id="ap" autocomplete="new-password">
+    <label for="ac" style="margin-top:var(--sp-3);display:block">Confirm</label>
+    <input class="qty" style="width:100%" type="password" name="customer[password_confirmation]" id="ac" autocomplete="new-password">
+    <div style="display:flex;gap:var(--sp-2);margin-top:var(--sp-4)">
+      <button class="btn btn--primary" type="submit">Activate</button>
+      <button class="btn btn--secondary" type="submit" name="decline">Decline</button>
+    </div>
+  {%- endform -%}
+</div></section>

@@ -1,0 +1,47 @@
+<section class="section--tight">
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 data-reveal style="margin-bottom:var(--sp-6)">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="benefits">
+      {%- for block in section.blocks -%}
+        <div class="benefit" data-reveal {{ block.shopify_attributes }}>
+          <span class="benefit__n">{{ block.settings.number }}</span>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefit numbers",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The numbers, not the adjectives" }
+  ],
+  "blocks": [
+    {
+      "type": "b",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefit numbers",
+      "blocks": [
+        { "type": "b", "settings": { "number": "5 g", "title": "Creatine monohydrate", "text": "The form with the research behind it, at the amount the research used." } },
+        { "type": "b", "settings": { "number": "3", "title": "Gummies a day", "text": "Chew them. No water, no shaker, no chalk." } },
+        { "type": "b", "settings": { "number": "40", "title": "Servings a jar", "text": "About six weeks of daily use." } },
+        { "type": "b", "settings": { "number": "0 g", "title": "Added sugar", "text": "Sugar-free, vegan, non-GMO, no gelatin." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

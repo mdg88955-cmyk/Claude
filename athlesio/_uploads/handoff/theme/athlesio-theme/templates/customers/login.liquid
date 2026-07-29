@@ -1,0 +1,12 @@
+<section class="section"><div class="container" style="max-width:420px">
+  <h1>Log in</h1>
+  {%- form 'customer_login' -%}
+    {{ form.errors | default_errors }}
+    <label for="ce">Email</label>
+    <input class="qty" style="width:100%" type="email" name="customer[email]" id="ce" autocomplete="email">
+    <label for="cp" style="margin-top:var(--sp-3);display:block">Password</label>
+    <input class="qty" style="width:100%" type="password" name="customer[password]" id="cp" autocomplete="current-password">
+    <button class="btn btn--primary btn--full" type="submit" style="margin-top:var(--sp-4)">Log in</button>
+  {%- endform -%}
+  <p style="margin-top:var(--sp-4)"><a href="{{ routes.account_register_url }}">Create an account</a></p>
+</div></section>

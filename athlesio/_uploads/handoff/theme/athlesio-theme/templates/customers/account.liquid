@@ -1,0 +1,14 @@
+<section class="section"><div class="container">
+  <h1>Account</h1>
+  <p class="muted">{{ customer.email }} &middot; <a href="{{ routes.account_logout_url }}">Log out</a></p>
+  <h3 style="margin-top:var(--sp-6)">Orders</h3>
+  {%- if customer.orders.size > 0 -%}
+    <table class="facts"><thead><tr><th>Order</th><th>Date</th><th>Total</th></tr></thead><tbody>
+    {%- for order in customer.orders -%}
+      <tr><td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+      <td>{{ order.created_at | date: '%d.%m.%Y' }}</td><td>{{ order.total_price | money }}</td></tr>
+    {%- endfor -%}
+    </tbody></table>
+  {%- else -%}<p class="muted">No orders yet.</p>{%- endif -%}
+  <p style="margin-top:var(--sp-5)"><a href="{{ routes.account_addresses_url }}">Manage addresses</a></p>
+</div></section>

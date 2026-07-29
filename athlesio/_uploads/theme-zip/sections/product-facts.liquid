@@ -1,0 +1,67 @@
+{%- comment -%}
+  The dosage table is the highest-trust element on the page. Monospaced
+  figures in a bordered table read like a spec sheet, not marketing.
+{%- endcomment -%}
+<section class="section--tight">
+  <div class="container">
+    <table class="facts" data-reveal>
+      <caption>{{ section.settings.caption }}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Ingredient</th>
+          <th scope="col">Amount</th>
+          {%- if section.settings.show_nrv -%}<th scope="col">% NRV</th>{%- endif -%}
+        </tr>
+      </thead>
+      <tbody>
+        {%- for block in section.blocks -%}
+          <tr {{ block.shopify_attributes }}>
+            <td>{{ block.settings.name }}</td>
+            <td>{{ block.settings.amount }}</td>
+            {%- if section.settings.show_nrv -%}<td>{{ block.settings.nrv | default: '&mdash;' }}</td>{%- endif -%}
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+
+    {%- if section.settings.note != blank -%}
+      <p class="muted" style="font-size:14px;margin-top:var(--sp-4)">{{ section.settings.note }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredient table",
+  "settings": [
+    { "type": "text", "id": "caption", "label": "Caption", "default": "Per 3-gummy serving" },
+    { "type": "checkbox", "id": "show_nrv", "label": "Show % NRV column", "default": true },
+    { "type": "textarea", "id": "note", "label": "Note below table", "default": "Vitamins B6 and B12 contribute to normal energy-yielding metabolism and to the reduction of tiredness and fatigue." }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Ingredient" },
+        { "type": "text", "id": "amount", "label": "Amount" },
+        { "type": "text", "id": "nrv", "label": "% NRV" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredient table",
+      "blocks": [
+        { "type": "row", "settings": { "name": "Creatine monohydrate", "amount": "5,000 mg" } },
+        { "type": "row", "settings": { "name": "L-carnitine", "amount": "1,000 mg" } },
+        { "type": "row", "settings": { "name": "BCAA 2:1:1 (leucine, isoleucine, valine)", "amount": "1,000 mg" } },
+        { "type": "row", "settings": { "name": "Taurine", "amount": "1,000 mg" } },
+        { "type": "row", "settings": { "name": "Vitamin B6", "amount": "5 mg", "nrv": "357%" } },
+        { "type": "row", "settings": { "name": "Vitamin B12", "amount": "50 mcg", "nrv": "2,000%" } },
+        { "type": "row", "settings": { "name": "Total active complex", "amount": "8,005 mg" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

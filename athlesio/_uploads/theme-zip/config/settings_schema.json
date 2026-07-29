@@ -1,0 +1,54 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Athlesio",
+    "theme_version": "1.0.0",
+    "theme_author": "Built for Athlesio",
+    "theme_documentation_url": "https://athlesio.at",
+    "theme_support_url": "mailto:info@athlesio.at"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "header", "content": "Logo" },
+      { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Transparent PNG or SVG. Falls back to the shop name if empty." },
+      { "type": "range", "id": "logo_height", "label": "Logo height", "min": 20, "max": 72, "step": 2, "unit": "px", "default": 40 },
+      { "type": "header", "content": "Colours" },
+      { "type": "paragraph", "content": "Sampled from the Athlesio logo. The gradient is applied to display type only — at body sizes the plum end fails WCAG AA." },
+      { "type": "color", "id": "color_ink", "label": "Page background", "default": "#14141A" },
+      { "type": "color", "id": "color_surface", "label": "Surface", "default": "#1B1B22" },
+      { "type": "color", "id": "color_line", "label": "Borders", "default": "#32323D" },
+      { "type": "color", "id": "color_plum", "label": "Gradient start (plum)", "default": "#9A5683" },
+      { "type": "color", "id": "color_gold", "label": "Gradient end / accent (gold)", "default": "#E3B545" },
+      { "type": "color", "id": "color_fg", "label": "Text", "default": "#F2F0EC" },
+      { "type": "color", "id": "color_fg_muted", "label": "Muted text", "default": "#A3A0AA" },
+      { "type": "header", "content": "Signature" },
+      { "type": "image_picker", "id": "tiger_mark", "label": "Tiger linework (no wordmark)", "info": "Used once per page as a 6% watermark. Do not reuse it elsewhere — it stops working the moment it appears twice." }
+    ]
+  },
+  {
+    "name": "Compliance",
+    "settings": [
+      { "type": "paragraph", "content": "Shown in the footer on every page. Required for food supplements." },
+      {
+        "type": "textarea",
+        "id": "supplement_disclaimer",
+        "label": "Footer disclaimer",
+        "default": "Food supplement. Not a substitute for a varied and balanced diet or a healthy lifestyle. Do not exceed the recommended daily dose. Not suitable for children, or for women who are pregnant or breastfeeding. Keep out of reach of young children."
+      },
+      {
+        "type": "checkbox",
+        "id": "show_dshea",
+        "label": "Show the US FDA (DSHEA) disclaimer",
+        "default": false,
+        "info": "Enable only when serving the US market with structure/function claims. Do NOT enable for the UK — creatine health claims are non-authorised in Great Britain."
+      },
+      {
+        "type": "textarea",
+        "id": "dshea_text",
+        "label": "DSHEA disclaimer",
+        "default": "These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease."
+      }
+    ]
+  }
+]

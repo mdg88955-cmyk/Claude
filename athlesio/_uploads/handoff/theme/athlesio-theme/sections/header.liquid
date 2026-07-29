@@ -1,0 +1,40 @@
+<header class="header">
+  <div class="container header__inner">
+    <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }}">
+      {%- if settings.logo -%}
+        <img src="{{ settings.logo | image_url: width: 400 }}"
+             alt="{{ shop.name | escape }}"
+             style="max-height:{{ settings.logo_height }}px" width="200" height="{{ settings.logo_height }}">
+      {%- else -%}
+        <span class="grad" style="font-size:24px">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="header__nav" id="main-nav" data-open="false">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="header__actions">
+      <a href="{{ routes.cart_url }}" class="btn btn--ghost">
+        Cart
+        {%- if cart.item_count > 0 %} <span class="cart-count">{{ cart.item_count }}</span>{% endif -%}
+      </a>
+      <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="main-nav" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

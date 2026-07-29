@@ -1,0 +1,14 @@
+<section class="section" style="text-align:center">
+  <div class="container" style="max-width:520px">
+    <span class="eyebrow">Gift card</span>
+    <h1><span class="grad">{{ gift_card.balance | money }}</span></h1>
+    <p class="lead center">Use this code at checkout.</p>
+    <p class="mono" style="font-size:22px;letter-spacing:.1em;background:var(--ath-surface-2);border:1px solid var(--ath-line);border-radius:var(--radius);padding:var(--sp-4)">
+      {{ gift_card.code | format_code }}
+    </p>
+    {%- if gift_card.expires_on -%}
+      <p class="muted" style="font-size:14px">Expires {{ gift_card.expires_on | date: '%d.%m.%Y' }}</p>
+    {%- endif -%}
+    <a class="btn btn--primary" href="{{ shop.url }}">Go to the shop</a>
+  </div>
+</section>

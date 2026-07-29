@@ -1,0 +1,300 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "product": "athlesio-creatine-gummies"
+      },
+      "blocks": {
+        "p1": {
+          "type": "pill",
+          "settings": {
+            "value": "5,000 mg",
+            "label": "creatine monohydrate"
+          }
+        },
+        "p2": {
+          "type": "pill",
+          "settings": {
+            "value": "8,005 mg",
+            "label": "active complex"
+          }
+        },
+        "p3": {
+          "type": "pill",
+          "settings": {
+            "value": "0 g",
+            "label": "added sugar"
+          }
+        },
+        "p4": {
+          "type": "pill",
+          "settings": {
+            "value": "40",
+            "label": "servings per jar"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ]
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "m1": {
+          "type": "item",
+          "settings": {
+            "text": "Sugar-free"
+          }
+        },
+        "m2": {
+          "type": "item",
+          "settings": {
+            "text": "Vegan - no gelatin"
+          }
+        },
+        "m3": {
+          "type": "item",
+          "settings": {
+            "text": "Non-GMO"
+          }
+        },
+        "m4": {
+          "type": "item",
+          "settings": {
+            "text": "40 servings per jar"
+          }
+        },
+        "m5": {
+          "type": "item",
+          "settings": {
+            "text": "Ships from Austria"
+          }
+        },
+        "m6": {
+          "type": "item",
+          "settings": {
+            "text": "14-day returns"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ]
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "b1": {
+          "type": "b",
+          "settings": {
+            "number": "5 g",
+            "title": "Creatine monohydrate",
+            "text": "The form with the research behind it, at the amount the research used."
+          }
+        },
+        "b2": {
+          "type": "b",
+          "settings": {
+            "number": "3",
+            "title": "Gummies a day",
+            "text": "Chew them. No water, no shaker, no chalk."
+          }
+        },
+        "b3": {
+          "type": "b",
+          "settings": {
+            "number": "40",
+            "title": "Servings a jar",
+            "text": "About six weeks of daily use."
+          }
+        },
+        "b4": {
+          "type": "b",
+          "settings": {
+            "number": "0 g",
+            "title": "Added sugar",
+            "text": "Sugar-free, vegan, non-GMO, no gelatin."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "split": {
+      "type": "split-feature",
+      "settings": {
+        "flip": true
+      }
+    },
+    "facts": {
+      "type": "product-facts",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "name": "Creatine monohydrate",
+            "amount": "5,000 mg"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "name": "L-carnitine",
+            "amount": "1,000 mg"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "name": "BCAA 2:1:1 (leucine, isoleucine, valine)",
+            "amount": "1,000 mg"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "name": "Taurine",
+            "amount": "1,000 mg"
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "name": "Vitamin B6",
+            "amount": "5 mg",
+            "nrv": "357%"
+          }
+        },
+        "r6": {
+          "type": "row",
+          "settings": {
+            "name": "Vitamin B12",
+            "amount": "50 mcg",
+            "nrv": "2,000%"
+          }
+        },
+        "r7": {
+          "type": "row",
+          "settings": {
+            "name": "Total active complex",
+            "amount": "8,005 mg"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6",
+        "r7"
+      ]
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Three gummies",
+            "text": "One serving. Chew them, no water needed, no chalky aftertaste."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Any time of day",
+            "text": "Pre-workout, post-workout, with breakfast. Whenever you will actually remember."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Every day, rest days included",
+            "text": "Give it three to four weeks. There is no meaningful day-one effect."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "honesty": {
+      "type": "honesty"
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "qa",
+          "settings": {
+            "q": "How long until I notice anything?",
+            "a": "Roughly three to four weeks of daily use. There is no meaningful day-one effect."
+          }
+        },
+        "q2": {
+          "type": "qa",
+          "settings": {
+            "q": "Do I need a loading phase?",
+            "a": "No. A standard daily amount gets you to the same place over a few more weeks."
+          }
+        },
+        "q3": {
+          "type": "qa",
+          "settings": {
+            "q": "Will it make me gain weight?",
+            "a": "Creatine draws water into muscle cells. It is intracellular water, not fat."
+          }
+        },
+        "q4": {
+          "type": "qa",
+          "settings": {
+            "q": "Can I take it on rest days?",
+            "a": "Yes. Daily consistency is the point."
+          }
+        },
+        "q5": {
+          "type": "qa",
+          "settings": {
+            "q": "Is it vegan?",
+            "a": "Yes. No gelatin, and the creatine is synthesised rather than animal-derived."
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "benefits",
+    "split",
+    "facts",
+    "how",
+    "honesty",
+    "faq"
+  ]
+}
