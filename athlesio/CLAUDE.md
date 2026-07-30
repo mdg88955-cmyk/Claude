@@ -154,9 +154,17 @@ exists. It does not — it is open item #1 in §7. On a brand whose entire posit
 transparency, that is the most damaging possible inconsistency, and §2 warns about
 exactly this. Rewritten to state where the brand actually stands. **Fixed and live.**
 
-`/pages/shipping` still prints literal `[X–Y] business days` for the UK and the US.
-A corrected body is prepared at `pending-store-changes/shipping-page.html` but was not
-applied — the connector dropped first. No delivery numbers were invented.
+`/pages/shipping` printed literal `[X–Y] business days` for the UK and the US. The rows
+were replaced with an honest paragraph. **Fixed and live.** No delivery numbers were
+invented — the real windows are unknown until a sample order has run through Zendrop.
+
+`/pages/returns` opened with an instruction addressed to the merchant — *"Copy this text
+into Settings → Policies…"* — visible to customers on a published page. Removed; that
+reminder belongs in §4, where it already is. The page also lacked the draft banner its
+siblings carry despite holding `[PLACEHOLDERS]` in the withdrawal form; added. And its
+US clause said returns accepted on *"unopened, **unsealed** jars"*, which contradicts
+both itself and the hygiene-seal exclusion two paragraphs above — corrected to *sealed*.
+**All fixed and live.**
 
 **Related decision the owner still owes:** the UK and US markets are ACTIVE while their
 delivery windows are unknown. Either run the sample order and publish real numbers, or
