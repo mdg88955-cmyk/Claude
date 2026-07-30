@@ -1,41 +1,7 @@
-{%- comment -%}
-  Athlesio — product page.
-
-  Design notes, so the reasoning survives the next handoff:
-  - The variant radios are named "id". The correct variant is therefore submitted even
-    with JavaScript disabled. The previous version used a hidden id input with radios
-    named "variant-choice", so any JS failure silently added the 1-jar variant.
-  - Per-jar price and saving are COMPUTED from real variant prices. The jar count comes
-    from the leading number in the variant title, falling back to loop position.
-  - The saving is only printed when the variant title does not already state one, so the
-    page never shows two different numbers for the same fact.
-  - "Best value per jar" replaces the old "Most chosen" badge: the store has no order
-    history, so "most chosen" was an unverifiable claim. Lowest per-jar price is arithmetic.
-  - The sticky bar's button uses form="athlesio-buy". It submits the real form with the
-    real selection and needs no JavaScript.
-{%- endcomment -%}
-
-{%- assign cur = product.selected_or_first_available_variant -%}
-
-{%- assign v_first = product.variants.first -%}
-{%- assign base_qty = v_first.title | split: ' ' | first | times: 1 -%}
-{%- if base_qty < 1 -%}{%- assign base_qty = 1 -%}{%- endif -%}
-{%- assign base_unit = v_first.price | divided_by: base_qty -%}
-
-{%- comment -%} Lowest per-jar price, so the value badge is factual rather than a guess {%- endcomment -%}
-{%- assign best_unit = base_unit -%}
-{%- for v in product.variants -%}
-  {%- assign q = v.title | split: ' ' | first | times: 1 -%}
-  {%- if q < 1 -%}{%- assign q = forloop.index -%}{%- endif -%}
-  {%- assign u = v.price | divided_by: q -%}
-  {%- if u < best_unit -%}{%- assign best_unit = u -%}{%- endif -%}
-{%- endfor -%}
-
 <section class="section">
   <div class="container">
     <div class="product">
 
-      {%- comment -%} Gallery {%- endcomment -%}
       <div class="product__gallery">
         <div class="product__main-img">
           {%- if product.featured_media -%}
@@ -55,7 +21,7 @@
                       data-full="{{ media | image_url: width: 1200 }}"
                       data-alt="{{ media.alt | escape }}"
                       aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
-                      aria-label="Show image {{ forloop.index }} of {{ product.media.size }}">
+                      aria-label="View image {{ forloop.index }}">
                 <img src="{{ media | image_url: width: 160 }}" alt="" width="72" height="72" loading="lazy">
               </button>
             {%- endfor -%}
@@ -63,17 +29,11 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} Buy box {%- endcomment -%}
-      <div id="buy">
+      <div data-buybox>
         <span class="eyebrow">{{ product.type | default: 'Food supplement' }}</span>
         <h1 style="font-size:clamp(30px,4vw,49px)">{{ product.title }}</h1>
 
-        <div class="product__price mono">
-          {%- if cur.compare_at_price > cur.price -%}
-            <del data-compare>{{ cur.compare_at_price | money }}</del>
-          {%- endif -%}
-          <span data-price>{{ cur.price | money }}</span>
-        </div>
+        <div class="product__price mono" data-price>{{ product.selected_or_first_available_variant.price | money }}</div>
         {%- if section.settings.unit_note != blank -%}
           <div class="product__unit">{{ section.settings.unit_note }}</div>
         {%- endif -%}
@@ -81,60 +41,57 @@
         {%- form 'product', product, id: 'athlesio-buy', data-product-form: true -%}
 
           {%- if product.variants.size > 1 -%}
-            <fieldset class="variants" style="border:0;padding:0;margin:0 0 var(--sp-5)">
-              <legend class="eyebrow" style="padding:0">Choose your supply</legend>
+            {%- assign base = product.variants.first.price -%}
+            <fieldset class="bundles" style="border:0;padding:0;margin:0 0 var(--sp-5)">
+              <legend class="eyebrow" style="padding:0;margin-bottom:var(--sp-3)">Choose your supply</legend>
 
               {%- for variant in product.variants -%}
-                {%- assign qty = variant.title | split: ' ' | first | times: 1 -%}
-                {%- if qty < 1 -%}{%- assign qty = forloop.index -%}{%- endif -%}
-                {%- assign unit = variant.price | divided_by: qty -%}
-
-                {%- comment -%} Rounded to the nearest percent so it agrees with the variant title {%- endcomment -%}
-                {%- assign save_pct = 0 -%}
-                {%- if unit < base_unit -%}
-                  {%- assign diff = base_unit | minus: unit | times: 1000 | divided_by: base_unit -%}
-                  {%- assign save_pct = diff | plus: 5 | divided_by: 10 -%}
-                {%- endif -%}
-
-                {%- assign t_low = variant.title | downcase -%}
-
-                <label class="variant"
+                {%- liquid
+                  assign n = forloop.index
+                  assign full = base | times: n
+                  assign saved = full | minus: variant.price
+                  assign pct = 0
+                  if full > 0 and saved > 0
+                    assign pct = saved | times: 100.0 | divided_by: full | round
+                  endif
+                -%}
+                <label class="bundle"
                        data-variant
                        data-variant-id="{{ variant.id }}"
                        data-variant-price="{{ variant.price | money }}"
-                       data-variant-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}"
                        data-available="{{ variant.available }}"
-                       data-selected="{% if variant.id == cur.id %}true{% else %}false{% endif %}">
+                       data-selected="{% if variant.id == product.selected_or_first_available_variant.id %}true{% else %}false{% endif %}">
                   <input type="radio" name="id" value="{{ variant.id }}"
-                         {% if variant.id == cur.id %}checked{% endif %}
+                         {% if variant.id == product.selected_or_first_available_variant.id %}checked{% endif %}
                          {% unless variant.available %}disabled{% endunless %}>
+                  <span class="bundle__dot" aria-hidden="true"></span>
                   <span>
-                    <span class="variant__label">{{ variant.title }}</span>
-                    {%- if qty > 1 and unit == best_unit -%}
-                      <span class="variant__badge">Best value per jar</span>
-                    {%- endif -%}
-                    <span class="variant__meta">
-                      {{ unit | money }} per jar
-                      {%- if save_pct > 0 -%}
-                        {%- unless t_low contains 'save' %} &middot; save {{ save_pct }}%{%- endunless -%}
-                      {%- endif -%}
-                      {%- unless variant.available %} &middot; sold out{%- endunless -%}
+                    <span class="bundle__label">{{ variant.title }}</span>
+                    <span class="bundle__meta">
+                      {%- if variant.available -%}
+                        {{ variant.price | divided_by: n | money }} per jar
+                      {%- else -%}Sold out{%- endif -%}
                     </span>
                   </span>
-                  <span class="variant__price">
-                    {%- if variant.compare_at_price > variant.price -%}<del>{{ variant.compare_at_price | money }}</del> {% endif -%}
+                  <span class="bundle__price">
                     {{ variant.price | money }}
+                    {%- if saved > 0 %}<br><span class="muted" style="font-size:12px"><del>{{ full | money }}</del></span>{% endif -%}
                   </span>
+                  {%- if pct > 0 -%}<span class="bundle__save">Save {{ pct }}%</span>{%- endif -%}
                 </label>
               {%- endfor -%}
             </fieldset>
           {%- endif -%}
 
           <button type="submit" name="add" class="btn btn--primary btn--full" data-add data-label="Add to cart"
-                  {% unless cur.available %}disabled{% endunless %}>
-            {% if cur.available %}Add to cart{% else %}Sold out{% endif %}
+                  {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+            {% if product.selected_or_first_available_variant.available %}Add to cart{% else %}Sold out{% endif %}
           </button>
         {%- endform -%}
+
+        {%- if section.settings.honest_note != blank -%}
+          <p class="muted" style="font-size:13px;margin-top:var(--sp-3);text-align:center">{{ section.settings.honest_note }}</p>
+        {%- endif -%}
 
         {%- if section.blocks.size > 0 -%}
           <div class="trust-strip">
@@ -144,97 +101,35 @@
           </div>
         {%- endif -%}
 
-        <div class="rte" style="margin-top:var(--sp-6)">
-          {{ product.description }}
-        </div>
+        <div class="rte" style="margin-top:var(--sp-6)">{{ product.description }}</div>
       </div>
     </div>
   </div>
 </section>
 
-{%- comment -%} Sticky buy bar, mobile only. form= submits the real form, so it works without JS. {%- endcomment -%}
-<div class="buybar" role="region" aria-label="Buy {{ product.title | escape }}">
-  <div class="buybar__info">
-    <span class="buybar__title">{{ product.title | truncatewords: 4, '' }}</span>
-    <span class="buybar__price mono" data-price>{{ cur.price | money }}</span>
+{%- comment -%} Sticky buy bar: appears once the buy box scrolls out of view. {%- endcomment -%}
+<div class="stickybar" data-stickybar data-show="false">
+  <div class="container stickybar__inner">
+    {%- if product.featured_media -%}
+      <img class="stickybar__img" src="{{ product.featured_media | image_url: width: 120 }}" alt="" width="48" height="48" loading="lazy">
+    {%- endif -%}
+    <div class="stickybar__txt">
+      <div class="stickybar__name">{{ product.title }}</div>
+      <div class="stickybar__price" data-sticky-price>{{ product.selected_or_first_available_variant.price | money }}</div>
+    </div>
+    <button class="btn btn--primary" type="submit" form="athlesio-buy" data-add data-label="Add to cart">Add to cart</button>
   </div>
-  <button type="submit" form="athlesio-buy" class="btn btn--primary buybar__btn" data-add data-label="Add to cart"
-          {% unless cur.available %}disabled{% endunless %}>
-    {% if cur.available %}Add to cart{% else %}Sold out{% endif %}
-  </button>
 </div>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "Product",
-  "name": {{ product.title | json }},
-  "description": {{ product.description | strip_html | truncate: 400 | json }},
-  {%- if product.featured_media %}
-  "image": {{ product.featured_media | image_url: width: 1200 | prepend: 'https:' | json }},
-  {%- endif %}
-  {%- if cur.sku != blank %}
-  "sku": {{ cur.sku | json }},
-  {%- endif %}
-  "brand": { "@type": "Brand", "name": {{ product.vendor | default: 'Athlesio' | json }} },
-  "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": {{ cart.currency.iso_code | json }},
-    "lowPrice": {{ product.price_min | divided_by: 100.0 }},
-    "highPrice": {{ product.price_max | divided_by: 100.0 }},
-    "offerCount": {{ product.variants.size }},
-    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
-    "url": {{ request.origin | append: product.url | json }}
-  }
-}
-</script>
-
-{% stylesheet %}
-/* The radio is 0x0, so a focus ring on it is invisible. Put it on the row instead —
-   the theme's accessibility floor says focus rings are never removed. */
-.variant:focus-within{
-  outline:2px solid var(--ath-gold);
-  outline-offset:2px;
-  border-color:var(--ath-gold);
-}
-.variant__meta{display:block;margin-top:2px}
-.variant__price del,.product__price del{color:var(--ath-fg-faint);text-decoration:line-through}
-
-/* Sticky buy bar, mobile only. On desktop the gallery is already sticky. */
-.buybar{
-  position:fixed;left:0;right:0;bottom:0;z-index:40;
-  display:none;align-items:center;gap:var(--sp-4);
-  padding:var(--sp-3) var(--sp-4);
-  padding-bottom:calc(var(--sp-3) + env(safe-area-inset-bottom,0px));
-  background:var(--ath-surface);
-  border-top:1px solid var(--ath-line);
-}
-.buybar__info{display:flex;flex-direction:column;min-width:0;flex:1}
-.buybar__title{
-  font-size:13px;color:var(--ath-fg-muted);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.buybar__price{font-size:17px;font-weight:500}
-.buybar__btn{min-height:48px;padding-inline:var(--sp-5);white-space:nowrap}
-
-@media(max-width:900px){
-  .buybar{display:flex}
-  body{padding-bottom:88px}
-}
-{% endstylesheet %}
 
 {% schema %}
 {
   "name": "Product",
   "settings": [
-    { "type": "text", "id": "unit_note", "label": "Note under price", "default": "120 gummies - 40 servings - about six weeks" }
+    { "type": "text", "id": "unit_note", "label": "Note under price", "default": "120 gummies - 40 servings - about six weeks" },
+    { "type": "text", "id": "honest_note", "label": "Note under the button", "default": "Creatine needs three to four weeks of daily use. Two jars is the honest starting point, not an upsell." }
   ],
   "blocks": [
-    {
-      "type": "trust",
-      "name": "Trust line",
-      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
-    }
+    { "type": "trust", "name": "Trust line", "settings": [{ "type": "text", "id": "text", "label": "Text" }] }
   ],
   "presets": [
     {

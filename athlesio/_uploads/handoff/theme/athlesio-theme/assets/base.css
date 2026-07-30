@@ -508,3 +508,6 @@ p{margin:0 0 var(--sp-4);max-width:68ch}
   .heroX h1,.heroX__sub,.heroX__buy,.pills{animation:none!important;opacity:1!important;transform:none!important}
   .stickybar{transition:none}
 }
+
+/* The bundle radio is 0x0, so :focus-visible on it is invisible. Ring the row. */
+.bundle:focus-within{outline:3px solid var(--ath-gold);outline-offset:2px;border-color:var(--ath-gold)}

@@ -1,9 +1,9 @@
-/* Athlesio — theme JS. No dependencies. Motion respects prefers-reduced-motion. */
+/* Athlesio — theme JS. No dependencies. All motion respects prefers-reduced-motion. */
 (function () {
   'use strict';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Mobile nav */
+  /* ---- Mobile nav ---- */
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-nav-toggle]');
     if (!t) return;
@@ -14,86 +14,83 @@
     t.setAttribute('aria-expanded', String(!open));
   });
 
-  /* Scroll reveal */
+  /* ---- Scroll reveal ---- */
+  var reveals = document.querySelectorAll('[data-reveal]');
   if (!reduced && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en, i) {
         if (!en.isIntersecting) return;
-        setTimeout(function () { en.target.classList.add('is-in'); }, i * 60);
+        setTimeout(function () { en.target.classList.add('is-in'); }, i * 70);
         io.unobserve(en.target);
       });
     }, { rootMargin: '0px 0px -12% 0px' });
-    document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+    reveals.forEach(function (el) { io.observe(el); });
   } else {
-    document.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
+    reveals.forEach(function (el) { el.classList.add('is-in'); });
   }
 
-  /* Tiger watermark parallax — 0.3x scroll speed, one band per page */
+  /* ---- Tiger watermark parallax ---- */
   var band = document.querySelector('[data-tiger]');
   if (band && !reduced) {
     var mark = band.querySelector('.tiger-band__mark');
-    var ticking = false;
-    window.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () {
-        var r = band.getBoundingClientRect();
-        if (r.bottom > 0 && r.top < window.innerHeight) {
-          var p = (window.innerHeight - r.top) * 0.08;
-          mark.style.transform = 'translate(-50%, calc(-50% - ' + p.toFixed(1) + 'px))';
-        }
-        ticking = false;
-      });
-    }, { passive: true });
+    if (mark) {
+      var t1 = false;
+      window.addEventListener('scroll', function () {
+        if (t1) return; t1 = true;
+        requestAnimationFrame(function () {
+          var r = band.getBoundingClientRect();
+          if (r.bottom > 0 && r.top < window.innerHeight) {
+            var p = (window.innerHeight - r.top) * 0.08;
+            mark.style.transform = 'translate(-50%, calc(-50% - ' + p.toFixed(1) + 'px))';
+          }
+          t1 = false;
+        });
+      }, { passive: true });
+    }
   }
 
-  /* Variant picker.
-
-     The radios are named "id", so the browser submits the selected variant on its own.
-     This code only mirrors the selection into the display: it must never write to the
-     radio's value, or re-selecting the first option would submit a stale id.
-     Both the buy box and the sticky bar carry [data-price] / [data-add], so every
-     matching element is updated, not just the first one. */
+  /* ---- Variant / bundle picker ---- */
   var form = document.querySelector('[data-product-form]');
+  var priceEl = document.querySelector('[data-price]');
+  var stickyPrice = document.querySelector('[data-sticky-price]');
+
   if (form) {
-    var rows = form.querySelectorAll('[data-variant]');
-    var priceEls = document.querySelectorAll('[data-price]');
-    var compareEl = document.querySelector('[data-compare]');
-    var addBtns = document.querySelectorAll('[data-add]');
+    var submits = document.querySelectorAll('[data-add]');
 
-    var select = function (row) {
-      var input = row.querySelector('input');
-      if (input && input.disabled) return;
-      if (input) input.checked = true;
+    form.querySelectorAll('[data-variant]').forEach(function (row) {
+      row.addEventListener('click', function () {
+        var input = row.querySelector('input');
+        if (input) input.checked = true;
 
-      rows.forEach(function (r) { r.setAttribute('data-selected', String(r === row)); });
+        form.querySelectorAll('[data-variant]').forEach(function (r) {
+          r.setAttribute('data-selected', String(r === row));
+        });
 
-      var price = row.getAttribute('data-variant-price');
-      if (price) priceEls.forEach(function (el) { el.textContent = price; });
+        var price = row.getAttribute('data-variant-price');
+        if (priceEl) priceEl.textContent = price;
+        if (stickyPrice) stickyPrice.textContent = price;
 
-      if (compareEl) {
-        var cmp = row.getAttribute('data-variant-compare');
-        compareEl.textContent = cmp || '';
-        compareEl.hidden = !cmp;
-      }
-
-      var avail = row.getAttribute('data-available') === 'true';
-      addBtns.forEach(function (b) {
-        b.disabled = !avail;
-        b.textContent = avail ? (b.getAttribute('data-label') || 'Add to cart') : 'Sold out';
+        var avail = row.getAttribute('data-available') === 'true';
+        submits.forEach(function (b) {
+          b.disabled = !avail;
+          b.textContent = avail ? (b.getAttribute('data-label') || 'Add to cart') : 'Sold out';
+        });
       });
-    };
-
-    rows.forEach(function (row) {
-      row.addEventListener('click', function () { select(row); });
-      var input = row.querySelector('input');
-      if (input) {
-        input.addEventListener('change', function () { if (input.checked) select(row); });
-      }
     });
   }
 
-  /* Gallery */
+  /* ---- Sticky buy bar: show once the buy box leaves the viewport ---- */
+  var bar = document.querySelector('[data-stickybar]');
+  var box = document.querySelector('[data-buybox]');
+  if (bar && box && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        bar.setAttribute('data-show', String(!en.isIntersecting && en.boundingClientRect.top < 0));
+      });
+    }, { threshold: 0 }).observe(box);
+  }
+
+  /* ---- Gallery thumbs ---- */
   var mainImg = document.querySelector('[data-main-image]');
   if (mainImg) {
     document.querySelectorAll('[data-thumb]').forEach(function (btn) {
