@@ -147,6 +147,21 @@ likely from a bulk status change at the end of the previous session.
 **Lesson: verify the live store before acting on this file.** A handoff doc records
 intent; only the API records truth. Re-run a state query at the start of every session.
 
+### Copy that claimed more than the brand can back
+
+`/pages/about` said **"Ask us for our certificate of analysis."** That implies the CoA
+exists. It does not — it is open item #1 in §7. On a brand whose entire positioning is
+transparency, that is the most damaging possible inconsistency, and §2 warns about
+exactly this. Rewritten to state where the brand actually stands. **Fixed and live.**
+
+`/pages/shipping` still prints literal `[X–Y] business days` for the UK and the US.
+A corrected body is prepared at `pending-store-changes/shipping-page.html` but was not
+applied — the connector dropped first. No delivery numbers were invented.
+
+**Related decision the owner still owes:** the UK and US markets are ACTIVE while their
+delivery windows are unknown. Either run the sample order and publish real numbers, or
+set those markets back to DRAFT until the numbers exist.
+
 ### Connector limits — confirmed and extended
 
 In addition to the two missing scopes in §4, the MCP connector also **blocks theme
